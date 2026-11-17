@@ -1,2 +1,32 @@
-# d2l-daily-learning
-每天 40 分钟的动手学深度学习计划：136 节中文笔记、PyTorch 实验、作业、参考答案与课件。
+# 动手学深度学习 每日 40 分钟
+
+基于 D2L 教材、官方源码和 UC Berkeley STAT 157 的中文自学课程，共 136 节。每节包括阅读、PyTorch 实验、作业、参考答案和课件。
+
+学习时间为每天 20:00（Asia/Taipei，UTC+8），每节约 40 分钟：阅读 10 分钟、代码练习 20 分钟、作业及核对 10 分钟。完整路线约 4.5 个月。
+
+## 从这里开始
+
+- [完整课程目录](CURRICULUM.md)
+- [可下载或在本地浏览的学习计划](study-plan.html)
+- [课程数据](curriculum.json)
+- [学习与交付进度](progress.json)
+- [每节交付规范](docs/teaching-spec.md)
+- [来源与许可说明](docs/source-notices.md)
+
+## 当前状态
+
+课程计划与初始进度已入库。ChatGPT Work 云端执行与定时任务正在迁移验证，尚未确认接管；首节材料尚未发布。旧的本地定时任务会在云端接管成功后停用。
+
+## 每节学习包
+
+每次在 `lessons/NNN/` 保存 `notes.html`、`lesson.py`、`lesson.ipynb`、`homework.txt`、`answers.html` 和 `slides.html`。答案与作业分开，课件为 5–7 页可浏览、可打印的 HTML。学习包完成检查后，以一次提交保存全部文件和进度。
+
+已推送与已确认完成分开记录。完成进度由学习者的反馈或作业更新。个人原始反馈及运行凭据不写入公开仓库。
+
+## 三项主要参考
+
+1. [Dive into Deep Learning](https://d2l.ai/)：内容范围与章节编号。
+2. [d2l-ai/d2l-en](https://github.com/d2l-ai/d2l-en)：代码、依赖与辅助函数。
+3. [UC Berkeley STAT 157 2019 春季课表](https://courses.d2l.ai/berkeley-stat-157/syllabus.html)：教学组织、讲义、视频与作业参考。
+
+[中文教材](https://zh.d2l.ai/)辅助理解。历史课程中的 MXNet 示例如经改编，会注明与 PyTorch 实现的差异。自编参考答案不代表大学课程的官方标准答案。
