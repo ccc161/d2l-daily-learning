@@ -19,6 +19,6 @@
   "public_state_policy": "仅记录课次状态和学习结果摘要；原始反馈、个人信息、运行凭据及本地绝对路径不入库。",
   "execution_migration": {
     "requested_environment": "ChatGPT Work cloud",
-    "status": "pending_verification"
+    "status": "configured_awaiting_first_scheduled_run"
   }
 }
