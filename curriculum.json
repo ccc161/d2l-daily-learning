@@ -1,6 +1,6 @@
 {
-  "schema_version": 2,
-  "title": "动手学深度学习 40 分钟每日学习计划",
+  "schema_version": 3,
+  "title": "动手学深度学习 40 分钟每日学习计划 纯本地实践版",
   "created_date": "2026-11-17",
   "language": "zh-CN",
   "framework": "PyTorch",
@@ -15,8 +15,21 @@
     "https://courses.d2l.ai/berkeley-stat-157/syllabus.html"
   ],
   "chinese_reference": "https://zh.d2l.ai/",
+  "practice_environment": "local_only",
+  "local_environment_policy": {
+    "required": "学习者本机 Python、Jupyter 和 PyTorch；每节提供 CPU 小规模基线",
+    "optional_acceleration": [
+      "本机 NVIDIA CUDA",
+      "本机 Apple MPS"
+    ],
+    "cloud_compute_required": false,
+    "paid_service_or_cloud_account_required": false,
+    "data_policy": "允许首次下载公开数据，支持本地缓存；提供小数据或合成数据替代，不以外部平台登录和提交为必做条件",
+    "distributed_topics": "使用单进程分片、梯度累积或单机模拟；真实多 GPU 仅作选读",
+    "delivery": "学习资料仍由 ChatGPT Work 云端任务生成与推送，学习者练习在本机运行"
+  },
   "repository_commit": "23d7a5aecceee57d1292c56e90cce307f183bb0a",
-  "source_policy": "英文教材编号为主；中文站辅助理解；伯克利 2019 春季课程提供相关讲义和练习。进阶章节按教材补充。",
+  "source_policy": "英文教材编号为主；中文站辅助理解；伯克利 2019 春季课程提供相关讲义和练习。23.2 至 23.5 改为本地工具专题，以替代条目的官方指南为必读来源，原云端章节仅保留替换映射。",
   "total_lessons": 136,
   "core_lessons_through_project": 108,
   "total_hours": 90.7,
@@ -38,7 +51,7 @@
     {
       "id": "001",
       "order": 1,
-      "title": "学习路线与一次机器学习实验的全貌；准备 Python 与 PyTorch 环境并运行检查",
+      "title": "学习路线与一次机器学习实验的全貌；在本机隔离 Python 环境并检查 PyTorch",
       "chapter": 0,
       "chapters": [
         0
@@ -61,7 +74,7 @@
           ]
         },
         {
-          "title": "准备 Python 与 PyTorch 环境并运行检查",
+          "title": "在本机隔离 Python 环境并检查 PyTorch",
           "chapter": 0,
           "kind": "lesson",
           "sources": [
@@ -97,6 +110,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [],
       "university_syllabus_url": "https://courses.d2l.ai/berkeley-stat-157/syllabus.html",
@@ -105,7 +119,7 @@
     {
       "id": "002",
       "order": 2,
-      "title": "使用 Notebook 运行、修改和重启实验；用数据、模型、损失描述预测问题",
+      "title": "使用本地 Jupyter Notebook 运行、修改和重启实验；用数据、模型、损失描述预测问题",
       "chapter": 0,
       "chapters": [
         0,
@@ -115,7 +129,7 @@
       "kind": "lesson",
       "learning_blocks": [
         {
-          "title": "使用 Notebook 运行、修改和重启实验",
+          "title": "使用本地 Jupyter Notebook 运行、修改和重启实验",
           "chapter": 0,
           "kind": "lesson",
           "sources": [
@@ -165,6 +179,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "001"
@@ -227,6 +242,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "002"
@@ -297,6 +313,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "003"
@@ -359,6 +376,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "004"
@@ -421,6 +439,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "005"
@@ -497,6 +516,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "006"
@@ -566,6 +586,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "007"
@@ -635,6 +656,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "008"
@@ -704,6 +726,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "009"
@@ -773,6 +796,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "010"
@@ -843,6 +867,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "011"
@@ -912,6 +937,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "012"
@@ -981,6 +1007,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "013"
@@ -1050,6 +1077,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "014"
@@ -1119,6 +1147,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "015"
@@ -1181,6 +1210,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "016"
@@ -1243,6 +1273,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "017"
@@ -1313,6 +1344,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "018"
@@ -1382,6 +1414,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "019"
@@ -1451,6 +1484,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "020"
@@ -1520,6 +1554,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "021"
@@ -1582,6 +1617,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "022"
@@ -1644,6 +1680,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "023"
@@ -1714,6 +1751,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "024"
@@ -1783,6 +1821,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "025"
@@ -1852,6 +1891,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "026"
@@ -1921,6 +1961,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "027"
@@ -1990,6 +2031,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "028"
@@ -2052,6 +2094,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "029"
@@ -2114,6 +2157,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "030"
@@ -2183,6 +2227,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "031"
@@ -2252,6 +2297,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "032"
@@ -2321,6 +2367,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "033"
@@ -2390,6 +2437,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "034"
@@ -2400,7 +2448,7 @@
     {
       "id": "036",
       "order": 36,
-      "title": "选择设备并检查张量位置；模型构建与保存复习：检索概念、调试代码与小测",
+      "title": "在本机选择 CPU、CUDA 或 MPS 并检查张量位置；模型构建与保存复习：检索概念、调试代码与小测",
       "chapter": 6,
       "chapters": [
         6
@@ -2409,7 +2457,7 @@
       "kind": "lesson",
       "learning_blocks": [
         {
-          "title": "选择设备并检查张量位置",
+          "title": "在本机选择 CPU、CUDA 或 MPS 并检查张量位置",
           "chapter": 6,
           "kind": "lesson",
           "sources": [
@@ -2459,6 +2507,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "035"
@@ -2528,6 +2577,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "036"
@@ -2597,6 +2647,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "037"
@@ -2659,6 +2710,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "038"
@@ -2728,6 +2780,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "039"
@@ -2797,6 +2850,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "040"
@@ -2866,6 +2920,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "041"
@@ -2935,6 +2990,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "042"
@@ -2997,6 +3053,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "043"
@@ -3059,6 +3116,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "044"
@@ -3128,6 +3186,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "045"
@@ -3197,6 +3256,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "046"
@@ -3259,6 +3319,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "047"
@@ -3321,6 +3382,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "048"
@@ -3390,6 +3452,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "049"
@@ -3459,6 +3522,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "050"
@@ -3521,6 +3585,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "051"
@@ -3590,6 +3655,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "052"
@@ -3660,6 +3726,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "053"
@@ -3729,6 +3796,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "054"
@@ -3798,6 +3866,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "055"
@@ -3867,6 +3936,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "056"
@@ -3936,6 +4006,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "057"
@@ -3998,6 +4069,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "058"
@@ -4067,6 +4139,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "059"
@@ -4136,6 +4209,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "060"
@@ -4198,6 +4272,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "061"
@@ -4267,6 +4342,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "062"
@@ -4336,6 +4412,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "063"
@@ -4405,6 +4482,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "064"
@@ -4467,6 +4545,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "065"
@@ -4536,6 +4615,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "066"
@@ -4605,6 +4685,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "067"
@@ -4674,6 +4755,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "068"
@@ -4743,6 +4825,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "069"
@@ -4812,6 +4895,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "070"
@@ -4881,6 +4965,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "071"
@@ -4950,6 +5035,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "072"
@@ -5019,6 +5105,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "073"
@@ -5088,6 +5175,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "074"
@@ -5158,6 +5246,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "075"
@@ -5168,7 +5257,7 @@
     {
       "id": "077",
       "order": 77,
-      "title": "正确计时并解释异步计算；识别数据传输与计算的并行机会",
+      "title": "正确计时并解释异步计算；在单机分析数据加载、传输与计算重叠",
       "chapter": 13,
       "chapters": [
         13
@@ -5191,7 +5280,7 @@
           ]
         },
         {
-          "title": "识别数据传输与计算的并行机会",
+          "title": "在单机分析数据加载、传输与计算重叠",
           "chapter": 13,
           "kind": "lesson",
           "sources": [
@@ -5227,6 +5316,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "076"
@@ -5237,7 +5327,7 @@
     {
       "id": "078",
       "order": 78,
-      "title": "用内存、带宽与算力解释瓶颈；手动拆分批次并聚合梯度",
+      "title": "用内存、带宽与算力解释瓶颈；在单进程拆分小批量并累加梯度",
       "chapter": 13,
       "chapters": [
         13
@@ -5260,7 +5350,7 @@
           ]
         },
         {
-          "title": "手动拆分批次并聚合梯度",
+          "title": "在单进程拆分小批量并累加梯度",
           "chapter": 13,
           "kind": "lesson",
           "sources": [
@@ -5296,6 +5386,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "077"
@@ -5306,7 +5397,7 @@
     {
       "id": "079",
       "order": 79,
-      "title": "理解数据并行中的参数同步；阅读并缩小多设备训练示例",
+      "title": "用本机分片实验验证梯度聚合等价性；把多设备训练改写为单设备与梯度累积",
       "chapter": 13,
       "chapters": [
         13
@@ -5315,7 +5406,7 @@
       "kind": "lesson",
       "learning_blocks": [
         {
-          "title": "理解数据并行中的参数同步",
+          "title": "用本机分片实验验证梯度聚合等价性",
           "chapter": 13,
           "kind": "lesson",
           "sources": [
@@ -5329,7 +5420,7 @@
           ]
         },
         {
-          "title": "阅读并缩小多设备训练示例",
+          "title": "把多设备训练改写为单设备与梯度累积",
           "chapter": 13,
           "kind": "lesson",
           "sources": [
@@ -5365,6 +5456,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "078"
@@ -5375,7 +5467,7 @@
     {
       "id": "080",
       "order": 80,
-      "title": "模拟参数服务器的一轮更新；计算性能复习：检索概念、调试代码与小测",
+      "title": "在单机模拟参数服务器的一轮更新；计算性能复习：检索概念、调试代码与小测",
       "chapter": 13,
       "chapters": [
         13
@@ -5384,7 +5476,7 @@
       "kind": "lesson",
       "learning_blocks": [
         {
-          "title": "模拟参数服务器的一轮更新",
+          "title": "在单机模拟参数服务器的一轮更新",
           "chapter": 13,
           "kind": "lesson",
           "sources": [
@@ -5434,6 +5526,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "079"
@@ -5503,6 +5596,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "080"
@@ -5572,6 +5666,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "081"
@@ -5634,6 +5729,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "082"
@@ -5703,6 +5799,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "083"
@@ -5772,6 +5869,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "084"
@@ -5834,6 +5932,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "085"
@@ -5896,6 +5995,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "086"
@@ -5965,6 +6065,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "087"
@@ -6027,6 +6128,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "088"
@@ -6089,6 +6191,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "089"
@@ -6151,6 +6254,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "090"
@@ -6213,6 +6317,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "091"
@@ -6283,6 +6388,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "092"
@@ -6352,6 +6458,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "093"
@@ -6421,6 +6528,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "094"
@@ -6490,6 +6598,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "095"
@@ -6559,6 +6668,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "096"
@@ -6621,6 +6731,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "097"
@@ -6690,6 +6801,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "098"
@@ -6759,6 +6871,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "099"
@@ -6828,6 +6941,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "100"
@@ -6897,6 +7011,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "101"
@@ -6959,6 +7074,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "102"
@@ -7021,6 +7137,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "103"
@@ -7083,6 +7200,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "104"
@@ -7167,6 +7285,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "105"
@@ -7250,6 +7369,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "106"
@@ -7334,6 +7454,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "107"
@@ -7403,6 +7524,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "108"
@@ -7472,6 +7594,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "109"
@@ -7541,6 +7664,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "110"
@@ -7610,6 +7734,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "111"
@@ -7679,6 +7804,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "112"
@@ -7748,6 +7874,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "113"
@@ -7817,6 +7944,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "114"
@@ -7886,6 +8014,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "115"
@@ -7955,6 +8084,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "116"
@@ -8017,6 +8147,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "117"
@@ -8086,6 +8217,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "118"
@@ -8148,6 +8280,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "119"
@@ -8218,6 +8351,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "120"
@@ -8287,6 +8421,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "121"
@@ -8356,6 +8491,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "122"
@@ -8425,6 +8561,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "123"
@@ -8494,6 +8631,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "124"
@@ -8563,6 +8701,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "125"
@@ -8633,6 +8772,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "126"
@@ -8702,6 +8842,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "127"
@@ -8771,6 +8912,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "128"
@@ -8840,6 +8982,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "129"
@@ -8909,6 +9052,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "130"
@@ -8978,6 +9122,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "131"
@@ -8988,7 +9133,7 @@
     {
       "id": "133",
       "order": 133,
-      "title": "阅读 SageMaker 的训练流程与资源配置；阅读 EC2 的实例、存储与训练流程",
+      "title": "用本地虚拟环境和配置文件复现实验；组织本地数据、日志与检查点并恢复训练",
       "chapter": 23,
       "chapters": [
         23
@@ -8997,30 +9142,30 @@
       "kind": "lesson",
       "learning_blocks": [
         {
-          "title": "阅读 SageMaker 的训练流程与资源配置",
+          "title": "用本地虚拟环境和配置文件复现实验",
           "chapter": 23,
           "kind": "lesson",
           "sources": [
             {
               "section": "23.2",
-              "book_title": "23.2. Using Amazon SageMaker",
-              "book_url": "https://d2l.ai/chapter_appendix-tools-for-deep-learning/sagemaker.html",
-              "repository_path": "chapter_appendix-tools-for-deep-learning/sagemaker.md",
-              "repository_url": "https://github.com/d2l-ai/d2l-en/blob/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_appendix-tools-for-deep-learning/sagemaker.md"
+              "book_title": "本地虚拟环境与可复现实验",
+              "book_url": "https://docs.python.org/3/library/venv.html",
+              "source_kind": "local_replacement",
+              "replaces_original_url": "https://d2l.ai/chapter_appendix-tools-for-deep-learning/sagemaker.html"
             }
           ]
         },
         {
-          "title": "阅读 EC2 的实例、存储与训练流程",
+          "title": "组织本地数据、日志与检查点并恢复训练",
           "chapter": 23,
           "kind": "lesson",
           "sources": [
             {
               "section": "23.3",
-              "book_title": "23.3. Using AWS EC2 Instances",
-              "book_url": "https://d2l.ai/chapter_appendix-tools-for-deep-learning/aws.html",
-              "repository_path": "chapter_appendix-tools-for-deep-learning/aws.md",
-              "repository_url": "https://github.com/d2l-ai/d2l-en/blob/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_appendix-tools-for-deep-learning/aws.md"
+              "book_title": "本地检查点与训练恢复",
+              "book_url": "https://docs.pytorch.org/tutorials/beginner/saving_loading_models.html",
+              "source_kind": "local_replacement",
+              "replaces_original_url": "https://d2l.ai/chapter_appendix-tools-for-deep-learning/aws.html"
             }
           ]
         }
@@ -9028,17 +9173,17 @@
       "sources": [
         {
           "section": "23.2",
-          "book_title": "23.2. Using Amazon SageMaker",
-          "book_url": "https://d2l.ai/chapter_appendix-tools-for-deep-learning/sagemaker.html",
-          "repository_path": "chapter_appendix-tools-for-deep-learning/sagemaker.md",
-          "repository_url": "https://github.com/d2l-ai/d2l-en/blob/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_appendix-tools-for-deep-learning/sagemaker.md"
+          "book_title": "本地虚拟环境与可复现实验",
+          "book_url": "https://docs.python.org/3/library/venv.html",
+          "source_kind": "local_replacement",
+          "replaces_original_url": "https://d2l.ai/chapter_appendix-tools-for-deep-learning/sagemaker.html"
         },
         {
           "section": "23.3",
-          "book_title": "23.3. Using AWS EC2 Instances",
-          "book_url": "https://d2l.ai/chapter_appendix-tools-for-deep-learning/aws.html",
-          "repository_path": "chapter_appendix-tools-for-deep-learning/aws.md",
-          "repository_url": "https://github.com/d2l-ai/d2l-en/blob/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_appendix-tools-for-deep-learning/aws.md"
+          "book_title": "本地检查点与训练恢复",
+          "book_url": "https://docs.pytorch.org/tutorials/beginner/saving_loading_models.html",
+          "source_kind": "local_replacement",
+          "replaces_original_url": "https://d2l.ai/chapter_appendix-tools-for-deep-learning/aws.html"
         }
       ],
       "minutes": 40,
@@ -9047,6 +9192,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "132"
@@ -9057,7 +9203,7 @@
     {
       "id": "134",
       "order": 134,
-      "title": "在 Colab 中检查运行时与文件持久性；根据模型需求估算显存和计算资源",
+      "title": "在本地 Jupyter 管理内核、工作目录与长任务；按本机 CPU、内存和显存调整批量与模型规模",
       "chapter": 23,
       "chapters": [
         23
@@ -9066,30 +9212,30 @@
       "kind": "lesson",
       "learning_blocks": [
         {
-          "title": "在 Colab 中检查运行时与文件持久性",
+          "title": "在本地 Jupyter 管理内核、工作目录与长任务",
           "chapter": 23,
           "kind": "lesson",
           "sources": [
             {
               "section": "23.4",
-              "book_title": "23.4. Using Google Colab",
-              "book_url": "https://d2l.ai/chapter_appendix-tools-for-deep-learning/colab.html",
-              "repository_path": "chapter_appendix-tools-for-deep-learning/colab.md",
-              "repository_url": "https://github.com/d2l-ai/d2l-en/blob/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_appendix-tools-for-deep-learning/colab.md"
+              "book_title": "本地 Jupyter 运行与工作目录",
+              "book_url": "https://docs.jupyter.org/en/latest/running.html",
+              "source_kind": "local_replacement",
+              "replaces_original_url": "https://d2l.ai/chapter_appendix-tools-for-deep-learning/colab.html"
             }
           ]
         },
         {
-          "title": "根据模型需求估算显存和计算资源",
+          "title": "按本机 CPU、内存和显存调整批量与模型规模",
           "chapter": 23,
           "kind": "lesson",
           "sources": [
             {
               "section": "23.5",
-              "book_title": "23.5. Selecting Servers and GPUs",
-              "book_url": "https://d2l.ai/chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.html",
-              "repository_path": "chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.md",
-              "repository_url": "https://github.com/d2l-ai/d2l-en/blob/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.md"
+              "book_title": "本机 PyTorch 安装与设备选择",
+              "book_url": "https://pytorch.org/get-started/locally/",
+              "source_kind": "local_replacement",
+              "replaces_original_url": "https://d2l.ai/chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.html"
             }
           ]
         }
@@ -9097,17 +9243,17 @@
       "sources": [
         {
           "section": "23.4",
-          "book_title": "23.4. Using Google Colab",
-          "book_url": "https://d2l.ai/chapter_appendix-tools-for-deep-learning/colab.html",
-          "repository_path": "chapter_appendix-tools-for-deep-learning/colab.md",
-          "repository_url": "https://github.com/d2l-ai/d2l-en/blob/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_appendix-tools-for-deep-learning/colab.md"
+          "book_title": "本地 Jupyter 运行与工作目录",
+          "book_url": "https://docs.jupyter.org/en/latest/running.html",
+          "source_kind": "local_replacement",
+          "replaces_original_url": "https://d2l.ai/chapter_appendix-tools-for-deep-learning/colab.html"
         },
         {
           "section": "23.5",
-          "book_title": "23.5. Selecting Servers and GPUs",
-          "book_url": "https://d2l.ai/chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.html",
-          "repository_path": "chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.md",
-          "repository_url": "https://github.com/d2l-ai/d2l-en/blob/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.md"
+          "book_title": "本机 PyTorch 安装与设备选择",
+          "book_url": "https://pytorch.org/get-started/locally/",
+          "source_kind": "local_replacement",
+          "replaces_original_url": "https://d2l.ai/chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.html"
         }
       ],
       "minutes": 40,
@@ -9116,6 +9262,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "133"
@@ -9185,6 +9332,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "134"
@@ -9261,6 +9409,7 @@
         "code": 20,
         "homework_and_check": 10
       },
+      "practice_environment": "local_only",
       "status": "planned",
       "prerequisites": [
         "135"

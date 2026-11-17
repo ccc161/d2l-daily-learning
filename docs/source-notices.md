@@ -9,3 +9,12 @@
 - 大学课程：https://courses.d2l.ai/berkeley-stat-157/syllabus.html，2019 年春季。其讲义、视频和作业优先链接到原发布位置。
 
 本仓库中的课程拆分与中文目标为新编。后续各节应注明使用了哪些教材章节、代码文件、大学课程单元，以及哪些练习或解答为自编。不要给其他来源的内容错误地套用统一许可。
+
+## 本地工具替代指南
+
+- [Python venv](https://docs.python.org/3/library/venv.html)：本地环境隔离与重建。
+- [PyTorch 保存与载入模型](https://docs.pytorch.org/tutorials/beginner/saving_loading_models.html)：本地检查点与恢复训练。
+- [Jupyter 本地运行](https://docs.jupyter.org/en/latest/running.html)：Notebook、内核与工作目录。
+- [PyTorch 本地安装](https://pytorch.org/get-started/locally/)：按本机系统和计算设备选取安装方式。
+
+这些指南替换原云端平台必修内容，原教材链接只保留为映射记录。

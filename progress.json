@@ -11,6 +11,10 @@
     {
       "date": "2026-11-17",
       "change": "按用户要求，从每两天 20 分钟改为每天 40 分钟；合并为 136 节。"
+    },
+    {
+      "date": "2026-11-18",
+      "change": "改为纯本地实践：替换原云端平台课程，补充 CPU/CUDA/MPS、单机模拟和本地实验管理；保持 136 节及原课号。"
     }
   ],
   "last_delivery_date": null,
@@ -20,5 +24,6 @@
   "execution_migration": {
     "requested_environment": "ChatGPT Work cloud",
     "status": "configured_awaiting_first_scheduled_run"
-  }
+  },
+  "practice_environment": "local_only"
 }

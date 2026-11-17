@@ -1,11 +1,13 @@
 # 完整课程目录
 
-每天一节，每节约 40 分钟：阅读 10 分钟、代码 20 分钟、作业 10 分钟。共 136 节。
+纯本地实践版。每天一节，每节约 40 分钟：阅读 10 分钟、代码 20 分钟、作业 10 分钟。共 136 节。
 
-| 课次 | 本节目标 | 教材 |
+所有核心练习在学习者本机运行，以 CPU 为基线；本机 CUDA 或 Apple MPS 可选。原云端平台章节已替换为本地工具专题，原节号仅用于对应关系。资料仍由 Work 云端任务生成与推送。
+
+| 课次 | 本节目标 | 教材或本地替代指南 |
 | --- | --- | --- |
-| 001 | 学习路线与一次机器学习实验的全貌；准备 Python 与 PyTorch 环境并运行检查 | [Preface](https://d2l.ai/chapter_preface/index.html) / [Installation](https://d2l.ai/chapter_installation/index.html) |
-| 002 | 使用 Notebook 运行、修改和重启实验；用数据、模型、损失描述预测问题 | [23.1](https://d2l.ai/chapter_appendix-tools-for-deep-learning/jupyter.html) / [1](https://d2l.ai/chapter_introduction/index.html) |
+| 001 | 学习路线与一次机器学习实验的全貌；在本机隔离 Python 环境并检查 PyTorch | [Preface](https://d2l.ai/chapter_preface/index.html) / [Installation](https://d2l.ai/chapter_installation/index.html) |
+| 002 | 使用本地 Jupyter Notebook 运行、修改和重启实验；用数据、模型、损失描述预测问题 | [23.1](https://d2l.ai/chapter_appendix-tools-for-deep-learning/jupyter.html) / [1](https://d2l.ai/chapter_introduction/index.html) |
 | 003 | 区分回归、分类与其他学习任务；理解深度学习的发展与适用场景 | [1](https://d2l.ai/chapter_introduction/index.html) |
 | 004 | 认识深度学习复习：检索概念、调试代码与小测；创建张量并读取形状 | [1](https://d2l.ai/chapter_introduction/index.html) / [2.1](https://d2l.ai/chapter_preliminaries/ndarray.html) |
 | 005 | 索引、切片与按元素计算；广播规则与内存共享 | [2.1](https://d2l.ai/chapter_preliminaries/ndarray.html) |
@@ -39,7 +41,7 @@
 | 033 | 组合模块并实现自定义 forward；查看、共享与冻结参数 | [6.1](https://d2l.ai/chapter_builders-guide/model-construction.html) / [6.2](https://d2l.ai/chapter_builders-guide/parameters.html) |
 | 034 | 编写并验证参数初始化；观察延后初始化如何确定形状 | [6.3](https://d2l.ai/chapter_builders-guide/init-param.html) / [6.4](https://d2l.ai/chapter_builders-guide/lazy-init.html) |
 | 035 | 编写含参数和无参数的自定义层；保存、载入并核对模型预测 | [6.5](https://d2l.ai/chapter_builders-guide/custom-layer.html) / [6.6](https://d2l.ai/chapter_builders-guide/read-write.html) |
-| 036 | 选择设备并检查张量位置；模型构建与保存复习：检索概念、调试代码与小测 | [6.7](https://d2l.ai/chapter_builders-guide/use-gpu.html) / [6](https://d2l.ai/chapter_builders-guide/index.html) |
+| 036 | 在本机选择 CPU、CUDA 或 MPS 并检查张量位置；模型构建与保存复习：检索概念、调试代码与小测 | [6.7](https://d2l.ai/chapter_builders-guide/use-gpu.html) / [6](https://d2l.ai/chapter_builders-guide/index.html) |
 | 037 | 从局部性与平移性质理解卷积；手算二维互相关 | [7.1](https://d2l.ai/chapter_convolutional-neural-networks/why-conv.html) / [7.2](https://d2l.ai/chapter_convolutional-neural-networks/conv-layer.html) |
 | 038 | 用卷积核学习边缘特征；计算填充、步幅与输出尺寸 | [7.2](https://d2l.ai/chapter_convolutional-neural-networks/conv-layer.html) / [7.3](https://d2l.ai/chapter_convolutional-neural-networks/padding-and-strides.html) |
 | 039 | 跟踪输入输出通道；理解 1×1 卷积 | [7.4](https://d2l.ai/chapter_convolutional-neural-networks/channels.html) |
@@ -80,10 +82,10 @@
 | 074 | 理解 Adadelta 的更新尺度；手算 Adam 的矩估计与偏差修正 | [12.9](https://d2l.ai/chapter_optimization/adadelta.html) / [12.10](https://d2l.ai/chapter_optimization/adam.html) |
 | 075 | 比较 Adam 与 SGD 的训练曲线；实现预热与学习率衰减 | [12.10](https://d2l.ai/chapter_optimization/adam.html) / [12.11](https://d2l.ai/chapter_optimization/lr-scheduler.html) |
 | 076 | 优化算法复习：检索概念、调试代码与小测；区分即时执行与编译执行 | [12](https://d2l.ai/chapter_optimization/index.html) / [13.1](https://d2l.ai/chapter_computational-performance/hybridize.html) |
-| 077 | 正确计时并解释异步计算；识别数据传输与计算的并行机会 | [13.2](https://d2l.ai/chapter_computational-performance/async-computation.html) / [13.3](https://d2l.ai/chapter_computational-performance/auto-parallelism.html) |
-| 078 | 用内存、带宽与算力解释瓶颈；手动拆分批次并聚合梯度 | [13.4](https://d2l.ai/chapter_computational-performance/hardware.html) / [13.5](https://d2l.ai/chapter_computational-performance/multiple-gpus.html) |
-| 079 | 理解数据并行中的参数同步；阅读并缩小多设备训练示例 | [13.5](https://d2l.ai/chapter_computational-performance/multiple-gpus.html) / [13.6](https://d2l.ai/chapter_computational-performance/multiple-gpus-concise.html) |
-| 080 | 模拟参数服务器的一轮更新；计算性能复习：检索概念、调试代码与小测 | [13.7](https://d2l.ai/chapter_computational-performance/parameterserver.html) / [13](https://d2l.ai/chapter_computational-performance/index.html) |
+| 077 | 正确计时并解释异步计算；在单机分析数据加载、传输与计算重叠 | [13.2](https://d2l.ai/chapter_computational-performance/async-computation.html) / [13.3](https://d2l.ai/chapter_computational-performance/auto-parallelism.html) |
+| 078 | 用内存、带宽与算力解释瓶颈；在单进程拆分小批量并累加梯度 | [13.4](https://d2l.ai/chapter_computational-performance/hardware.html) / [13.5](https://d2l.ai/chapter_computational-performance/multiple-gpus.html) |
+| 079 | 用本机分片实验验证梯度聚合等价性；把多设备训练改写为单设备与梯度累积 | [13.5](https://d2l.ai/chapter_computational-performance/multiple-gpus.html) / [13.6](https://d2l.ai/chapter_computational-performance/multiple-gpus-concise.html) |
+| 080 | 在单机模拟参数服务器的一轮更新；计算性能复习：检索概念、调试代码与小测 | [13.7](https://d2l.ai/chapter_computational-performance/parameterserver.html) / [13](https://d2l.ai/chapter_computational-performance/index.html) |
 | 081 | 实现图像增广并比较训练和验证流程；替换分类头并冻结特征 | [14.1](https://d2l.ai/chapter_computer-vision/image-augmentation.html) / [14.2](https://d2l.ai/chapter_computer-vision/fine-tuning.html) |
 | 082 | 比较冻结训练与整体微调；转换边界框坐标并计算 IoU | [14.2](https://d2l.ai/chapter_computer-vision/fine-tuning.html) / [14.3](https://d2l.ai/chapter_computer-vision/bounding-box.html) |
 | 083 | 生成锚框并理解正负匹配；编码边界框偏移 | [14.4](https://d2l.ai/chapter_computer-vision/anchor.html) |
@@ -136,7 +138,7 @@
 | 130 | 计算随机变量变换后的分布；从似然推导常用训练损失 | [22.6](https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/random-variables.html) / [22.7](https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/maximum-likelihood.html) |
 | 131 | 比较常用分布及其参数；实现一个朴素贝叶斯小分类器 | [22.8](https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/distributions.html) / [22.9](https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/naive-bayes.html) |
 | 132 | 用采样解释估计误差与置信区间；手算熵、交叉熵与 KL 散度 | [22.10](https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/statistics.html) / [22.11](https://d2l.ai/chapter_appendix-mathematics-for-deep-learning/information-theory.html) |
-| 133 | 阅读 SageMaker 的训练流程与资源配置；阅读 EC2 的实例、存储与训练流程 | [23.2](https://d2l.ai/chapter_appendix-tools-for-deep-learning/sagemaker.html) / [23.3](https://d2l.ai/chapter_appendix-tools-for-deep-learning/aws.html) |
-| 134 | 在 Colab 中检查运行时与文件持久性；根据模型需求估算显存和计算资源 | [23.4](https://d2l.ai/chapter_appendix-tools-for-deep-learning/colab.html) / [23.5](https://d2l.ai/chapter_appendix-tools-for-deep-learning/selecting-servers-gpus.html) |
+| 133 | 用本地虚拟环境和配置文件复现实验；组织本地数据、日志与检查点并恢复训练 | [23.2 本地替换](https://docs.python.org/3/library/venv.html) / [23.3 本地替换](https://docs.pytorch.org/tutorials/beginner/saving_loading_models.html) |
+| 134 | 在本地 Jupyter 管理内核、工作目录与长任务；按本机 CPU、内存和显存调整批量与模型规模 | [23.4 本地替换](https://docs.jupyter.org/en/latest/running.html) / [23.5 本地替换](https://pytorch.org/get-started/locally/) |
 | 135 | 复现问题并准备可读的改进补丁；阅读并拆解一个 d2l 工具函数 | [23.6](https://d2l.ai/chapter_appendix-tools-for-deep-learning/contributing.html) / [23.7](https://d2l.ai/chapter_appendix-tools-for-deep-learning/utils.html) |
 | 136 | 定位 d2l API 与对应源码；整理个人实验模板与后续学习清单 | [23.8](https://d2l.ai/chapter_appendix-tools-for-deep-learning/d2l.html) / [23.7](https://d2l.ai/chapter_appendix-tools-for-deep-learning/utils.html) |
