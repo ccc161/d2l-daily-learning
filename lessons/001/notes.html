@@ -1,0 +1,33 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>001 · 学习笔记</title><style>body{font-family:system-ui,sans-serif;color:#172b37;background:#f5f4ef;line-height:1.75;margin:0}main{max-width:920px;margin:auto;padding:36px 24px}h1,h2{line-height:1.3;color:#125553}h1{font-size:2.2rem}h2{margin-top:2rem}pre{background:#152d36;color:#f3f7f6;padding:18px;overflow:auto;font-size:14px;line-height:1.6}code{font-family:monospace}a{color:#086b73}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #b6c8c5;text-align:left;padding:9px}.callout{border-left:5px solid #d3993a;padding:12px 20px;background:#fff}nav{display:flex;gap:16px;flex-wrap:wrap}section.slide{box-sizing:border-box;min-height:650px;background:white;border-top:8px solid #125553;margin:28px 0;padding:36px;box-shadow:0 5px 20px #172b3710}.flow{font-size:1.35rem;background:#e8f3ef;padding:20px}footer{margin-top:32px;font-size:.85rem}@media print{@page{size:A4 landscape;margin:12mm}body{background:white}main{max-width:none;padding:0}nav{display:none}section.slide{break-after:page;height:180mm;min-height:0;margin:0;box-shadow:none;padding:15px 25px}section.slide:last-of-type{break-after:auto}pre{white-space:pre-wrap;color:black;background:#eee;font-size:11px}a{color:inherit}footer{font-size:10px}}</style><main><nav><a href="notes.html">笔记</a><a href="slides.html">六页课件</a><a href="homework.txt">作业</a><a href="answers.html">参考答案</a></nav><h1>第001/136节 · 本机环境与训练全貌</h1>
+<p>学习路线与一次机器学习实验的全貌；在本机隔离 Python 环境并检查 PyTorch。</p>
+<p class="callout">本节目标是能解释数据、模型、损失和更新各自的作用，并在自己的电脑运行一段完整实验。先修只需能读变量、循环和函数。线性回归与梯度的推导会在后续课展开。</p>
+<table><tr><th>时间</th><th>行动与产出</th></tr><tr><td>阅读10分钟</td><td>读下方流程，口述模型如何从数据学习。</td></tr><tr><td>代码20分钟</td><td>前5分钟检查解释器和内核，接着运行、对照输出，最后修改标签规则。</td></tr><tr><td>作业与核对10分钟</td><td>概念题3分钟、代码题5分钟、对照答案2分钟。</td></tr></table>
+<p>安装和网络下载时间单列。若尚无 Python，先安装适合操作系统的本机 Python，再做环境准备；安装超时可先完成阅读，练习在环境就绪后继续。核心实验仅8个训练点，不下载数据。</p>
+<h2>1. 从可解释的规则开始</h2><p>想预测输入数字对应的输出，训练样本来自 y=2x+1。我们知道规则用于核对，但模型只接收样本。模型 ŷ=wx+b 的 w 与 b 是可调参数。初始 w=b=0，所有预测为0。训练通过误差调整参数，逐渐接近 w=2、b=1。</p>
+<p class="flow">输入 x → 模型 wx+b → 预测 ŷ → 与标签 y 比较 → 损失 → 梯度 → 参数更新</p>
+<p>损失函数 L=(1/n)Σ(ŷᵢ−yᵢ)² 是平均平方误差 MSE，越小表示当前样本拟合越好。优化器按梯度决定如何更新参数。留出样本不参与更新，用于检查模型对未见输入的预测。本例规则无噪声，留出误差接近0很正常，真实数据还要考虑噪声、泄漏和分布变化。</p>
+<h2>2. 先确认 Python 和 Notebook 使用同一环境</h2><p>虚拟环境把依赖隔离在课程项目内。始终使用 python -m pip，让安装目标跟随当前解释器。下方命令从仓库根目录执行。若本机使用 python3 或 Windows py 启动解释器，创建环境时使用对应命令。激活失败时可直接调用该环境的 Python。不要为绕过 PowerShell 限制而全局修改策略，可用命令提示符运行 .venv\Scripts\activate.bat。</p><pre># 已安装本机 Python 3.11+ 时，在课程目录中创建环境
+python -m venv .venv
+# macOS / Linux
+source .venv/bin/activate
+# Windows PowerShell 改用
+# .venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+# macOS安装适合本机的包；Linux/Windows CPU优先采用官方选择器的CPU命令
+python -m pip install torch jupyterlab ipykernel
+python -m ipykernel install --user --name d2l-local --display-name &quot;D2L local&quot;
+python lessons/001/lesson.py
+python -m jupyterlab
+# 在界面打开 lessons/001/lesson.ipynb，选择 D2L local 内核，重启并运行全部单元格
+</pre>
+<p>本课只依赖 torch，Notebook 界面另外需要 jupyterlab 与 ipykernel，不需要安装 d2l。教材固定源码中的 Python 与框架版本属于历史配置，当前安装按 PyTorch 官方选择器核对。已有可用 PyTorch 的环境可直接运行。选择 CPU 即可完成，CUDA 与 MPS 可用性只用于了解设备，本节计算固定在 CPU。</p>
+<h2>3. 读懂输入输出与五步训练</h2><p>x 与 y 的形状均为 (8,1)，即8个样本、每个1个数。nn.Linear(1,1) 接受1个特征，输出1个预测。weight 为 (1,1)，bias 为 (1,)。如果把 y 写成 (8,)，广播可能意外形成 (8,8) 的差值，应让标签与预测形状一致。</p>
+<pre>prediction = model(x)         # 前向计算
+loss = loss_fn(prediction, y) # 比较预测与标签
+optimizer.zero_grad()         # 清除上一轮梯度
+loss.backward()               # 计算本轮梯度
+optimizer.step()              # 更新参数</pre>
+<p>梯度可以理解为损失对参数微小变化的敏感程度。SGD 使用学习率控制步幅，简写为 θ←θ−η∇L。今天不要求推导；先识别 backward 负责算梯度，step 负责更新参数。no_grad 用在初始化和评估，避免记录无用计算图。</p>
+<h2>4. 运行后核对</h2><p>随机种子为42，并把初始参数置0。运行120轮、学习率0.1。初始训练 MSE 理论值为8.5，最终 w 约2、b约1。留出输入 [-1.25,0.75] 的预测应约为 [-1.5,2.5]。验收为训练损失下降、留出 MSE&lt;0.0001、参数误差均&lt;0.01，脚本最后打印 PASS。不同版本末位小数可能变化。</p>
+<p>学习者输入是代码内的合成数据，输出仅打印到终端。完整实现见 <a href="lesson.py">Python</a> 和 <a href="lesson.ipynb">Notebook</a>。Notebook 重启内核后从头执行，若导入失败，先核对界面选中的内核。终端运行成功不能证明 Notebook 使用了同一解释器。</p>
+<h2>5. 常见问题与回顾</h2><ul><li>ModuleNotFoundError 通常说明包没有装进当前解释器，先用同一解释器执行 python -m pip show torch。</li><li>没有 CUDA/MPS 也可完成本节。安装和运行中的设备选择应匹配。</li><li>改标签后忘改断言会失败；断言表达的是当前实验的验收条件。</li><li>只看训练损失容易误判泛化，留出输入必须不参与梯度更新。</li></ul><p>现在用自己的话解释四个角色，再完成作业。下一节沿既有目录进入深度学习导论，讨论问题、数据与学习方式。</p><h2>来源与验证</h2><ul><li><a href="https://d2l.ai/chapter_preface/index.html">D2L Preface</a> 与 <a href="https://d2l.ai/chapter_installation/index.html">Installation</a>，学习方法与环境背景。</li><li><a href="https://github.com/d2l-ai/d2l-en/blob/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_preface/index.md">固定版本序言源码</a>、<a href="https://github.com/d2l-ai/d2l-en/blob/23d7a5aecceee57d1292c56e90cce307f183bb0a/chapter_installation/index.md">安装源码</a>。</li><li><a href="https://courses.d2l.ai/berkeley-stat-157/syllabus.html">Berkeley STAT 157（2019）课表</a>，参考入门、安装与 Jupyter 的组织顺序；历史框架安装命令不作为本课要求。</li><li><a href="https://pytorch.org/get-started/locally/">PyTorch 本地安装选择器</a>，按系统与硬件选择兼容版本；<a href="https://zh.d2l.ai/">中文教材</a>辅助阅读。</li></ul><p>本课中文讲解、实验和答案为自编，按上述主题组织。没有复制上游代码，不代表 Berkeley 官方答案。教材及源码版权与许可见仓库 <a href="../../docs/source-notices.md">来源说明</a>。</p><p>执行环境、实际输出与验证范围见 <a href="validation.json">验证记录</a>。本节已交付不等于学习者已完成。</p></main></html>

@@ -1,0 +1,54 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>001 · 参考答案</title><style>body{font-family:system-ui,sans-serif;color:#172b37;background:#f5f4ef;line-height:1.75;margin:0}main{max-width:920px;margin:auto;padding:36px 24px}h1,h2{line-height:1.3;color:#125553}h1{font-size:2.2rem}h2{margin-top:2rem}pre{background:#152d36;color:#f3f7f6;padding:18px;overflow:auto;font-size:14px;line-height:1.6}code{font-family:monospace}a{color:#086b73}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #b6c8c5;text-align:left;padding:9px}.callout{border-left:5px solid #d3993a;padding:12px 20px;background:#fff}nav{display:flex;gap:16px;flex-wrap:wrap}section.slide{box-sizing:border-box;min-height:650px;background:white;border-top:8px solid #125553;margin:28px 0;padding:36px;box-shadow:0 5px 20px #172b3710}.flow{font-size:1.35rem;background:#e8f3ef;padding:20px}footer{margin-top:32px;font-size:.85rem}@media print{@page{size:A4 landscape;margin:12mm}body{background:white}main{max-width:none;padding:0}nav{display:none}section.slide{break-after:page;height:180mm;min-height:0;margin:0;box-shadow:none;padding:15px 25px}section.slide:last-of-type{break-after:auto}pre{white-space:pre-wrap;color:black;background:#eee;font-size:11px}a{color:inherit}footer{font-size:10px}}</style><main><nav><a href="notes.html">笔记</a><a href="slides.html">六页课件</a><a href="homework.txt">作业</a><a href="answers.html">参考答案</a></nav><h1>第001节 · 独立参考答案</h1><p>自编答案，建议完成作业后查看。</p><h2>Q1 概念题</h2><p>数据提供输入x和标签y；模型以可调参数w和b把输入映射为预测；MSE量化预测与标签的偏差；优化器利用梯度更新参数。留出样本参与更新会使评估失去独立性。训练误差低还可能来自过拟合或泄漏，不能保证在真实数据上可靠。</p><p>本例规则简单且无噪声，训练点和留出点来自同一条直线。留出误差很小只支持这个合成任务上的结论。</p><h2>Q2 完整代码</h2><p>训练与评估都改成相同规则，模型形状、学习率、轮数无需改变。初始训练MSE理论值为17.125。预期w≈−3，b≈0.5，预测约为 [4.25,−1.75]。</p><pre>&quot;&quot;&quot;第001节：本机 CPU 环境检查与微型回归实验。
+依赖：torch。运行：python lesson.py。无需下载数据。
+输入为8个训练样本、2个留出样本；输出设备、形状、损失与参数。
+&quot;&quot;&quot;
+import torch
+
+
+def run_experiment():
+    # 本节固定CPU作为可复现基线。CUDA/MPS仅报告可用性。
+    torch.manual_seed(42)
+    torch.set_num_threads(1)
+    device = torch.device(&quot;cpu&quot;)
+    print(&quot;PyTorch&quot;, torch.__version__)
+    print(&quot;device&quot;, device)
+    print(&quot;CUDA available&quot;, torch.cuda.is_available())
+    print(&quot;MPS available&quot;, torch.backends.mps.is_available())
+
+    # 每行一个样本、每个样本一个特征；标签也保留列维度。
+    x = torch.tensor([-2., -1.5, -1., -.5, .5, 1., 1.5, 2.]).reshape(-1, 1)
+    y = -3 * x + 0.5
+    x_test = torch.tensor([[-1.25], [.75]])
+    y_test = -3 * x_test + 0.5
+    model = torch.nn.Linear(1, 1).to(device)
+    with torch.no_grad():
+        model.weight.zero_()
+        model.bias.zero_()
+    optimizer = torch.optim.SGD(model.parameters(), lr=0.1)
+    loss_fn = torch.nn.MSELoss()
+    initial_loss = loss_fn(model(x), y).item()
+    print(&quot;train shapes&quot;, tuple(x.shape), tuple(y.shape))
+    for _ in range(120):
+        prediction = model(x)
+        loss = loss_fn(prediction, y)
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+    with torch.no_grad():
+        final_loss = loss_fn(model(x), y).item()
+        test_prediction = model(x_test)
+        test_loss = loss_fn(test_prediction, y_test).item()
+    print(f&quot;train MSE {initial_loss:.6f} -&gt; {final_loss:.6f}&quot;)
+    print(f&quot;test MSE {test_loss:.6f}&quot;)
+    print(f&quot;weight {model.weight.item():.6f}, bias {model.bias.item():.6f}&quot;)
+    print(&quot;test predictions&quot;, test_prediction.flatten().tolist())
+    assert final_loss &lt; initial_loss
+    assert test_loss &lt; 1e-4
+    assert abs(model.weight.item() + 3) &lt; .01
+    assert abs(model.bias.item() - 0.5) &lt; .01
+    print(&quot;PASS&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    run_experiment()
+</pre><h2>典型误区</h2><p>只改训练标签会让留出评估与任务冲突；只改断言会掩盖规则没有变更；把留出点拼回训练集会破坏独立核对。答案中的loss阈值适用于本节无噪声数据，不能直接作为所有任务的指标。</p><h2>选做解释</h2><p>学习率1.0对本例过大。对w的二次损失曲率为2·mean(x²)=3.75，稳定的固定步长需小于2/3.75≈0.533；1.0会让误差振荡扩大。实际任务应结合损失曲线调整步幅。</p></main></html>

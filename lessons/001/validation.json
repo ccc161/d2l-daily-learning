@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-18",
+  "python": "3.12.14",
+  "torch": "2.15.0+cpu",
+  "device": "cpu",
+  "seed": 42,
+  "script": "passed",
+  "reference_answer": "passed",
+  "notebook_schema": "passed",
+  "notebook_execution": "All code cells executed sequentially in a fresh Python namespace; passed. Jupyter kernel launch blocked by runtime socket restrictions; kernel execution not verified.",
+  "notebook_output_provenance": "stdout captured from direct sequential Python cell execution, not a Jupyter kernel",
+  "expected_results": {
+    "original_train_mse_initial": 8.5,
+    "original_weight": 2,
+    "original_bias": 1,
+    "original_test_predictions": [
+      -1.5,
+      2.5
+    ],
+    "answer_train_mse_initial": 17.125,
+    "answer_weight": -3,
+    "answer_bias": 0.5,
+    "answer_test_predictions": [
+      4.25,
+      -1.75
+    ]
+  },
+  "assertions": "Training MSE decreased, test MSE < 1e-4, parameter errors < 0.01 for both experiments",
+  "accelerators": "CUDA and MPS unavailable in validation environment; accelerator execution not tested",
+  "html_validation": {
+    "renderer": "WeasyPrint 70.0",
+    "results": {
+      "notes": {
+        "print_pages": 4
+      },
+      "answers": {
+        "print_pages": 3
+      },
+      "slides": {
+        "print_pages": 6
+      }
+    },
+    "browser_preview": "Browser unavailable; print rendering checked instead"
+  }
+}
