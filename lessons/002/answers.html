@@ -1,0 +1,68 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>002 · 参考答案</title><style>body{font-family:system-ui,sans-serif;color:#172b37;background:#f5f4ef;line-height:1.75;margin:0}main{max-width:920px;margin:auto;padding:36px 24px}h1,h2{line-height:1.3;color:#125553}h1{font-size:2.2rem}h2{margin-top:2rem}pre{background:#152d36;color:#f3f7f6;padding:18px;overflow:auto;font-size:14px;line-height:1.6}code{font-family:monospace}a{color:#086b73}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #b6c8c5;text-align:left;padding:9px}.callout{border-left:5px solid #d3993a;padding:12px 20px;background:#fff}nav{display:flex;gap:16px;flex-wrap:wrap}section.slide{box-sizing:border-box;min-height:650px;background:white;border-top:8px solid #125553;margin:28px 0;padding:36px;box-shadow:0 5px 20px #172b3710}.flow{font-size:1.35rem;background:#e8f3ef;padding:20px}footer{margin-top:32px;font-size:.85rem}@media print{@page{size:A4 landscape;margin:12mm}body{background:white}main{max-width:none;padding:0}nav{display:none}section.slide{break-after:page;height:180mm;min-height:0;margin:0;box-shadow:none;padding:15px 25px}section.slide:last-of-type{break-after:auto}pre{white-space:pre-wrap;color:black;background:#eee;font-size:11px}a{color:inherit}footer{font-size:10px}}</style></head><body><main><nav><a href="notes.html">笔记</a><a href="slides.html">六页课件</a><a href="homework.txt">作业</a><a href="answers.html">独立答案</a></nav><h1>第002节 · 独立参考答案</h1><p>以下为自编参考解答，先完成homework.txt再核对。</p><h2>Q1 解释</h2><p>saved_prediction存的是旧表达式的结果。weight与bias被赋予新值后，已计算的张量仍保留原来的数；必须重新调用predict。编辑改变文件中的文字，运行改变内核状态并生成输出，重启清空内核变量，随后运行全部会按文件顺序恢复定义和计算。</p><p>数据为四组输入与标签，模型为wx+b，损失是平均平方误差。候选设置由同一批数据的MSE比较，因此低误差不能证明在未见数据上可靠。</p><h2>Q2 数值核对</h2><table><tr><th>项目</th><th>修改后的结果</th></tr><tr><td>标签</td><td>[-1,2,5,8]</td></tr><tr><td>before / stale / recomputed</td><td>9 / 9 / 1.5</td></tr><tr><td>constant_mean</td><td>11.25（常数3.5）</td></tr><tr><td>x</td><td>9</td></tr><tr><td>2x+1</td><td>1.5</td></tr><tr><td>3x-1</td><td>0（best）</td></tr></table><p>以2x+1为例，误差为[2,1,0,-1]，平方和6，再除以4得到1.5。从干净状态运行以下完整代码会得到上述数值。Notebook界面重启仍需在本机操作确认。</p><pre>&quot;&quot;&quot;第002节：本地 Notebook 状态与预测问题。
+依赖 torch；运行 python lessons/002/lesson.py。
+CPU、种子42、4个合成样本；无外部输入和数据下载。
+输出标签、形状、旧/新预测误差、四个候选模型的MSE和PASS。
+&quot;&quot;&quot;
+# 1. 准备可复现的本机CPU环境
+import torch
+
+torch.manual_seed(42)
+torch.set_num_threads(1)
+device = torch.device(&quot;cpu&quot;)
+print(&quot;PyTorch&quot;, torch.__version__, &quot;device&quot;, device)
+
+
+# 2. 数据、模型与损失
+# 只在本单元格修改目标规则；修改后需要重跑下游单元格。
+TARGET_WEIGHT = 3.0
+TARGET_BIAS = -1.0
+x = torch.tensor([0., 1., 2., 3.], device=device).reshape(-1, 1)
+y = TARGET_WEIGHT * x + TARGET_BIAS
+
+
+def predict(features, weight, bias):
+    return weight * features + bias
+
+
+def mse(predictions, labels):
+    # 避免(4,)和(4,1)广播，掩盖预测问题的错误。
+    assert predictions.shape == labels.shape
+    return torch.mean((predictions - labels) ** 2).item()
+
+
+print(&quot;shapes&quot;, tuple(x.shape), tuple(y.shape))
+print(&quot;labels&quot;, y.flatten().tolist())
+
+
+# 3. 已保存的预测不会因参数重赋值自动变化
+weight, bias = 1.0, 0.0
+saved_prediction = predict(x, weight, bias)
+saved_copy = saved_prediction.clone()
+old_loss = mse(saved_prediction, y)
+weight, bias = 2.0, 1.0
+stale_loss = mse(saved_prediction, y)
+fresh_prediction = predict(x, weight, bias)
+fresh_loss = mse(fresh_prediction, y)
+assert torch.equal(saved_prediction, saved_copy)
+assert old_loss == stale_loss
+print(f&quot;before {old_loss:.6f}; stale {stale_loss:.6f}; recomputed {fresh_loss:.6f}&quot;)
+
+
+# 4. 在同一数据上比较候选模型
+# 这里只比较预设模型；没有执行梯度训练，也没有评估真实泛化。
+candidates = [
+    (&quot;constant_mean&quot;, 0.0, y.mean().item()),
+    (&quot;x&quot;, 1.0, 0.0),
+    (&quot;2x+1&quot;, 2.0, 1.0),
+    (&quot;3x-1&quot;, 3.0, -1.0),
+]
+scores = []
+for name, candidate_weight, candidate_bias in candidates:
+    value = mse(predict(x, candidate_weight, candidate_bias), y)
+    scores.append((name, value))
+    print(f&quot;{name}: MSE={value:.6f}&quot;)
+best_name, best_loss = min(scores, key=lambda item: item[1])
+assert best_loss &lt; 1e-6
+print(&quot;best&quot;, best_name)
+print(&quot;PASS&quot;)
+</pre><h2>常见误区</h2><p>只改标签显示文字没有改变y；只重跑候选单元格可能继续使用旧y；只重启而没有运行全部会导致变量缺失。先在纸上写出标签，再核对每个单元格的依赖。</p><h2>选做答案</h2><p>(4,1)预测与(4,)标签相减会广播成(4,4)，混合了不同样本之间的配对。形状断言会在计算前报错，避免把错误结果当作模型分数。</p></main></body></html>

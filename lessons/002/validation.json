@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-19",
+  "python": "3.12.14",
+  "torch": "2.15.0+cpu",
+  "device": "cpu",
+  "seed": 42,
+  "script": "passed",
+  "reference_answer": "passed",
+  "notebook_schema": "passed",
+  "notebook_sequential_execution": "Four code cells passed twice in independent fresh Python namespaces; original output equals script output. Modified-target cells equal reference answer output. Notebook saved with empty outputs.",
+  "jupyter_kernel_check": "Attempted nbclient/ipykernel startup over TCP and IPC; runtime denied required networking or socket operations. Jupyter kernel execution and UI restart were not verified. All notebook code cells passed sequential fresh-namespace execution.",
+  "shape_mismatch_guard": "passed",
+  "html_relative_links": "checked against lesson files and repository source-notice reference",
+  "html_print_rendering": {
+    "renderer": "WeasyPrint 70.0",
+    "pages": {
+      "notes": 5,
+      "answers": 4,
+      "slides": 6
+    },
+    "slide_pages": 6,
+    "browser_preview": "Browser execution not tested"
+  },
+  "actual_script_stdout": "PyTorch 2.15.0+cpu device cpu\nshapes (4, 1) (4, 1)\nlabels [1.0, 3.0, 5.0, 7.0]\nbefore 7.500000; stale 7.500000; recomputed 0.000000\nconstant_mean: MSE=5.000000\nx: MSE=7.500000\n2x+1: MSE=0.000000\n3x-1: MSE=1.500000\nbest 2x+1\nPASS\n",
+  "actual_answer_stdout": "PyTorch 2.15.0+cpu device cpu\nshapes (4, 1) (4, 1)\nlabels [-1.0, 2.0, 5.0, 8.0]\nbefore 9.000000; stale 9.000000; recomputed 1.500000\nconstant_mean: MSE=11.250000\nx: MSE=9.000000\n2x+1: MSE=1.500000\n3x-1: MSE=0.000000\nbest 3x-1\nPASS\n",
+  "accelerators": "CPU baseline tested. CUDA and Apple MPS execution not tested.",
+  "html_visual_review": "Print rendering of slide pages 4 and 6 reviewed; text and code fit on page."
+}
