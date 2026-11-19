@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-20",
+  "python": "3.12.14",
+  "torch": "2.15.0+cpu",
+  "device": "cpu",
+  "seed": 42,
+  "script": "passed",
+  "reference_answer": "passed",
+  "notebook_schema": "passed",
+  "notebook_execution": "Four code cells passed twice in independent fresh Python namespaces; output equals standalone script. Modified-label cells equal reference answer. Saved notebook outputs are empty.",
+  "jupyter_kernel_execution": "Not tested in this run; previous attempts in this workspace were blocked by runtime socket restrictions. Learner should restart and run all in local Jupyter.",
+  "shape_mismatch_guard": "passed",
+  "html_relative_links": "checked against lesson files and repository source-notice reference",
+  "html_print_rendering": {
+    "renderer": "WeasyPrint 70.0",
+    "pages": {
+      "notes": 6,
+      "answers": 4,
+      "slides": 6
+    },
+    "slide_pages": 6,
+    "browser_preview": "Browser execution not tested"
+  },
+  "original_metrics": [
+    [
+      0.5,
+      0.25146,
+      1.0
+    ],
+    [
+      1.5,
+      0.326603,
+      0.833333
+    ]
+  ],
+  "homework_metrics": [
+    [
+      0.5,
+      0.334793,
+      0.833333
+    ],
+    [
+      1.5,
+      0.24327,
+      1.0
+    ]
+  ],
+  "metric_tuple_fields": [
+    "center",
+    "BCE",
+    "accuracy"
+  ],
+  "actual_script_stdout": "PyTorch 2.15.0+cpu device cpu\nshapes (6, 1) (6, 1) (6, 1)\nregression labels [-3.0, -1.0, 1.0, 3.0, 5.0, 7.0]\nclass labels [0.0, 0.0, 0.0, 1.0, 1.0, 1.0]\nregression MSE rough=1.000000, exact=0.000000\ncenter=0.5: BCE=0.251460, accuracy=1.000000\npredicted classes [0.0, 0.0, 0.0, 1.0, 1.0, 1.0]\ncenter=1.5: BCE=0.326603, accuracy=0.833333\npredicted classes [0.0, 0.0, 0.0, 0.0, 1.0, 1.0]\nprobabilities [0.0759, 0.1824, 0.3775, 0.6225, 0.8176, 0.9241]\nPASS\n",
+  "actual_answer_stdout": "PyTorch 2.15.0+cpu device cpu\nshapes (6, 1) (6, 1) (6, 1)\nregression labels [-3.0, -1.0, 1.0, 3.0, 5.0, 7.0]\nclass labels [0.0, 0.0, 0.0, 0.0, 1.0, 1.0]\nregression MSE rough=1.000000, exact=0.000000\ncenter=0.5: BCE=0.334793, accuracy=0.833333\npredicted classes [0.0, 0.0, 0.0, 1.0, 1.0, 1.0]\ncenter=1.5: BCE=0.243270, accuracy=1.000000\npredicted classes [0.0, 0.0, 0.0, 0.0, 1.0, 1.0]\nprobabilities [0.0759, 0.1824, 0.3775, 0.6225, 0.8176, 0.9241]\nPASS\n",
+  "accelerators": "CPU tested; CUDA and Apple MPS execution not tested.",
+  "html_visual_review": "Printed slide pages 3 and 5 visually reviewed; text, formulas, code and tables fit on page."
+}

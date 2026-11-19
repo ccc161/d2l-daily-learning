@@ -1,0 +1,61 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>003 · 参考答案</title><style>body{font-family:system-ui,sans-serif;color:#172b37;background:#f5f4ef;line-height:1.75;margin:0}main{max-width:920px;margin:auto;padding:36px 24px}h1,h2{line-height:1.3;color:#125553}h1{font-size:2.2rem}h2{margin-top:2rem}pre{background:#152d36;color:#f3f7f6;padding:18px;overflow:auto;font-size:14px;line-height:1.6}code{font-family:monospace}a{color:#086b73}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #b6c8c5;text-align:left;padding:9px}.callout{border-left:5px solid #d3993a;padding:12px 20px;background:#fff}nav{display:flex;gap:16px;flex-wrap:wrap}section.slide{box-sizing:border-box;min-height:650px;background:white;border-top:8px solid #125553;margin:28px 0;padding:36px;box-shadow:0 5px 20px #172b3710}.flow{font-size:1.35rem;background:#e8f3ef;padding:20px}footer{margin-top:32px;font-size:.85rem}@media print{@page{size:A4 landscape;margin:12mm}body{background:white}main{max-width:none;padding:0}nav{display:none}section.slide{break-after:page;height:180mm;min-height:0;margin:0;box-shadow:none;padding:15px 25px}section.slide:last-of-type{break-after:auto}pre{white-space:pre-wrap;color:black;background:#eee;font-size:11px}a{color:inherit}footer{font-size:10px}}</style></head><body><main><nav><a href="notes.html">笔记</a><a href="slides.html">六页课件</a><a href="homework.txt">作业</a><a href="answers.html">参考答案</a></nav><h1>第003节 · 独立参考答案</h1><p>自编解答，先完成homework.txt再核对。</p><h2>Q1</h2><p>a是回归，目标为具有数量意义的价格。b是分类，0、1、2只是类别标识，不表示猫与鸟的距离是猫与狗的两倍。c是无监督分组，数据没有指定的目标标签。d是强化学习，行动影响后续状态和奖励，目标通常涉及累计回报。</p><p>简单基线有助于确认任务是否需要复杂模型；小数据难以充分约束大量参数，并且复杂方法需要额外计算与调试预算。最终仍应在独立数据上比较适合任务的指标。</p><h2>Q2</h2><p>只有x=1的标签从1变成0。center=0.5仍把它预测为1，因此正确5/6；center=1.5把它预测为0，六个点均正确。回归目标独立定义，完全不受这个分类规则修改影响。</p><table><tr><th>候选center</th><th>修改后BCE</th><th>修改后准确率</th></tr><tr><td>0.5</td><td>0.334793</td><td>5/6</td></tr><tr><td>1.5</td><td>0.243270</td><td>1</td></tr></table><p>数值为CPU实测，末位可能随版本有微小差异，完整输出见validation.json。以下代码与Notebook修改后的单元格等价。</p><pre>&quot;&quot;&quot;第003节：回归、分类与任务定义。
+依赖torch。运行python lessons/003/lesson.py。
+CPU、种子42，6个合成输入，无需外部数据或云服务。
+输出标签、形状、MSE、BCE、准确率、概率与PASS。
+&quot;&quot;&quot;
+# 1. 本机CPU与两种标签
+import torch
+
+torch.manual_seed(42)
+torch.set_num_threads(1)
+device = torch.device(&quot;cpu&quot;)
+# x为6个样本，每个样本1个特征。无需下载或读写数据。
+x = torch.tensor([-2., -1., 0., 1., 2., 3.], device=device).reshape(-1, 1)
+regression_target = 2 * x + 1
+LABEL_THRESHOLD = 2.0
+class_target = (x &gt;= LABEL_THRESHOLD).float()
+print(&quot;PyTorch&quot;, torch.__version__, &quot;device&quot;, device)
+print(&quot;shapes&quot;, tuple(x.shape), tuple(regression_target.shape), tuple(class_target.shape))
+print(&quot;regression labels&quot;, regression_target.flatten().tolist())
+print(&quot;class labels&quot;, class_target.flatten().tolist())
+
+
+# 2. 连续值预测与MSE
+# 比较预设模型，今天不进行梯度训练。
+rough_prediction = 2 * x
+exact_prediction = 2 * x + 1
+assert rough_prediction.shape == regression_target.shape
+mse = torch.nn.MSELoss()
+rough_mse = mse(rough_prediction, regression_target).item()
+exact_mse = mse(exact_prediction, regression_target).item()
+print(f&quot;regression MSE rough={rough_mse:.6f}, exact={exact_mse:.6f}&quot;)
+assert abs(rough_mse - 1.0) &lt; 1e-6
+assert exact_mse &lt; 1e-6
+
+
+# 3. 二元类别、logit与交叉熵
+def binary_metrics(logits, labels):
+    assert logits.shape == labels.shape
+    # BCEWithLogitsLoss接收原始分数，内部处理sigmoid，勿提前调用sigmoid。
+    loss = torch.nn.BCEWithLogitsLoss()(logits, labels).item()
+    predictions = (logits &gt;= 0).float()
+    accuracy = (predictions == labels).float().mean().item()
+    return loss, accuracy, predictions
+
+
+for center in [0.5, 1.5]:
+    logits = x - center
+    loss, accuracy, predictions = binary_metrics(logits, class_target)
+    print(f&quot;center={center:.1f}: BCE={loss:.6f}, accuracy={accuracy:.6f}&quot;)
+    print(&quot;predicted classes&quot;, predictions.flatten().tolist())
+    assert torch.isfinite(torch.tensor(loss))
+
+
+# 4. 分数、概率和硬分类不是同一个量
+logits = x - 0.5
+probabilities = torch.sigmoid(logits)
+_, _, predicted_classes = binary_metrics(logits, class_target)
+assert torch.equal(predicted_classes, (probabilities &gt;= 0.5).float())
+print(&quot;probabilities&quot;, [round(value, 4) for value in probabilities.flatten().tolist()])
+print(&quot;PASS&quot;)
+</pre><h2>常见误区</h2><p>只改输出文字不能改变标签；给BCEWithLogitsLoss传sigmoid后的概率会改变它所解释的输入；分类准确率变高不意味着可以拿它和回归MSE直接比较。</p><h2>选做</h2><p>正数倍缩放logit不改变正负号，所以硬分类结果不变。概率会更接近0或1；正确且更自信的样本交叉熵变小，错误且更自信的样本交叉熵变大。总体变化取决于所有样本，而不是仅由准确率决定。</p></main></body></html>
