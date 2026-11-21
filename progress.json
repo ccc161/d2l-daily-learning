@@ -2,7 +2,7 @@
   "schema_version": 1,
   "course_status": "active",
   "total_lessons": 136,
-  "next_lesson_id": "005",
+  "next_lesson_id": "006",
   "delivered": [
     {
       "lesson_id": "001",
@@ -19,6 +19,10 @@
     {
       "lesson_id": "004",
       "date": "2026-11-21"
+    },
+    {
+      "lesson_id": "005",
+      "date": "2026-11-22"
     }
   ],
   "confirmed_completed": [],
@@ -34,8 +38,8 @@
       "change": "改为纯本地实践：替换原云端平台课程，补充 CPU/CUDA/MPS、单机模拟和本地实验管理；保持 136 节及原课号。"
     }
   ],
-  "last_delivery_date": "2026-11-21",
-  "updated_date": "2026-11-21",
+  "last_delivery_date": "2026-11-22",
+  "updated_date": "2026-11-22",
   "completion_policy": "只有用户明确反馈或提交作业后才记录完成；推送成功只更新 delivered。",
   "public_state_policy": "仅记录课次状态和学习结果摘要；原始反馈、个人信息、运行凭据及本地绝对路径不入库。",
   "execution_migration": {

@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-22",
+  "python": "3.12.14",
+  "torch": "2.15.0+cpu",
+  "device": "cpu",
+  "seed": 42,
+  "script": "passed",
+  "reference_answer": "passed",
+  "notebook_schema": "passed",
+  "notebook_execution": "Four code cells executed twice in independent fresh Python namespaces; output equals standalone script. Notebook saved with empty outputs.",
+  "jupyter_kernel_execution": "Not tested in this run; earlier ipykernel attempts in this workspace encountered runtime socket restrictions. Local restart-and-run-all remains a learner check.",
+  "checks": [
+    "integer index and basic slice shapes",
+    "elementwise output",
+    "broadcast output values and incompatible shape rejection",
+    "base/alias/view mutation propagation",
+    "clone independence",
+    "out-of-place result independence",
+    "homework exact output and unchanged X",
+    "optional slice-name rebinding leaves base unchanged"
+  ],
+  "html_relative_links": "checked against lesson files and repository source-notice reference",
+  "html_print_rendering": {
+    "renderer": "WeasyPrint 70.0",
+    "pages": {
+      "notes": 5,
+      "answers": 3,
+      "slides": 6
+    },
+    "slide_pages": 6,
+    "browser_preview": "Browser execution not tested"
+  },
+  "actual_script_stdout": "PyTorch 2.15.0+cpu device cpu\nX [[0.0, 1.0, 2.0, 3.0], [4.0, 5.0, 6.0, 7.0], [8.0, 9.0, 10.0, 11.0]]\nrow shapes (4,) (1, 4)\nlast value 11.0\nblock [[1.0, 2.0], [5.0, 6.0]]\ndoubled first row [0.0, 2.0, 4.0, 6.0]\nfeature broadcast (3, 4) [[10.0, 21.0, 32.0, 43.0], [14.0, 25.0, 36.0, 47.0], [18.0, 29.0, 40.0, 51.0]]\nouter broadcast (3, 4) [[101.0, 102.0, 103.0, 104.0], [201.0, 202.0, 203.0, 204.0], [301.0, 302.0, 303.0, 304.0]]\nincompatible broadcast rejected: (3, 4) and (3,)\nbase after view edit [[0.0, 99.0, 2.0], [3.0, 4.0, 5.0]]\nclone after view edit [[1.0, 2.0], [4.0, 5.0]]\nbase after in-place add [[1.0, 100.0, 3.0], [4.0, 5.0, 6.0]]\nview after in-place add [[100.0, 3.0], [5.0, 6.0]]\nnew result kept [[10.0, 109.0, 12.0], [13.0, 14.0, 15.0]]\nPASS\n",
+  "actual_answer_stdout": "result [[10.0, 121.0, 132.0], [13.0, 124.0, 135.0], [16.0, 27.0, 38.0], [19.0, 30.0, 41.0]]\npatch [[121.0, 132.0], [124.0, 135.0]]\nindependent [[21.0, 32.0], [24.0, 35.0]]\nX unchanged True\nPASS\n",
+  "accelerators": "CPU tested; CUDA and Apple MPS execution not tested.",
+  "html_visual_review": "Printed slide pages 3 and 4 reviewed; tables, code and explanations fit on page."
+}

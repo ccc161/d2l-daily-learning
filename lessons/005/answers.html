@@ -1,0 +1,30 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>005 · 参考答案</title><style>body{font-family:system-ui,sans-serif;color:#172b37;background:#f5f4ef;line-height:1.75;margin:0}main{max-width:920px;margin:auto;padding:36px 24px}h1,h2{line-height:1.3;color:#125553}h1{font-size:2.2rem}h2{margin-top:2rem}pre{background:#152d36;color:#f3f7f6;padding:18px;overflow:auto;font-size:14px;line-height:1.6}code{font-family:monospace}a{color:#086b73}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #b6c8c5;text-align:left;padding:9px}.callout{border-left:5px solid #d3993a;padding:12px 20px;background:#fff}nav{display:flex;gap:16px;flex-wrap:wrap}section.slide{box-sizing:border-box;min-height:650px;background:white;border-top:8px solid #125553;margin:28px 0;padding:36px;box-shadow:0 5px 20px #172b3710}.flow{font-size:1.35rem;background:#e8f3ef;padding:20px}footer{margin-top:32px;font-size:.85rem}@media print{@page{size:A4 landscape;margin:12mm}body{background:white}main{max-width:none;padding:0}nav{display:none}section.slide{break-after:page;height:180mm;min-height:0;margin:0;box-shadow:none;padding:15px 25px}section.slide:last-of-type{break-after:auto}pre{white-space:pre-wrap;color:black;background:#eee;font-size:11px}a{color:inherit}footer{font-size:10px}}</style></head><body><main><nav><a href="notes.html">笔记</a><a href="slides.html">六页课件</a><a href="homework.txt">作业</a><a href="answers.html">独立答案</a></nav><h1>第005节 · 独立参考答案</h1><p>自编解答，请先完成作业。</p><h2>Q1</h2><p>X[1]为(4,)，整数索引取第2行并移除原第0轴；X[1:2]为(1,4)，切片选择同一行但保留长度1的轴。</p><p>(3,1)+(4,)对齐成(3,1)+(1,4)，结果(3,4)。对(3,4)+(3,)，最后一轴4和3既不相等也没有1，所以不兼容。</p><p>alias与base是同一个对象；基本切片view共享base的数据；clone保存独立副本。修改共享区域会被base、alias和view观察到，clone保留复制时的数值。</p><h2>Q2 完整代码</h2><p>原始X每行三个特征，长度3的offsets沿行重复使用。加法产生新result，基本切片patch共享result，independent则复制修改前的块。</p><pre>&quot;&quot;&quot;第005节代码题自编参考解答。依赖torch，CPU独立运行。&quot;&quot;&quot;
+import torch
+
+torch.manual_seed(42)
+device = torch.device(&quot;cpu&quot;)
+X = torch.arange(12, dtype=torch.float32, device=device).reshape(4, 3)
+original = X.clone()
+offsets = torch.tensor([10., 20., 30.], device=device)
+result = X + offsets
+patch = result[:2, 1:]
+independent = patch.clone()
+patch.add_(100)
+print(&quot;result&quot;, result.tolist())
+print(&quot;patch&quot;, patch.tolist())
+print(&quot;independent&quot;, independent.tolist())
+print(&quot;X unchanged&quot;, torch.equal(X, original))
+expected = torch.tensor([[10., 121., 132.], [13., 124., 135.],
+                         [16., 27., 38.], [19., 30., 41.]], device=device)
+expected_copy = torch.tensor([[21., 32.], [24., 35.]], device=device)
+assert torch.equal(result, expected)
+assert torch.equal(independent, expected_copy)
+assert torch.equal(X, original)
+assert patch.shape == (2, 2)
+print(&quot;PASS&quot;)
+</pre><h2>预期结果与误区</h2><pre>result [[10.0,121.0,132.0],[13.0,124.0,135.0],
+        [16.0,27.0,38.0],[19.0,30.0,41.0]]
+patch [[121.0,132.0],[124.0,135.0]]
+independent [[21.0,32.0],[24.0,35.0]]
+X unchanged True
+PASS</pre><p>若在加100之后才clone，副本会记录修改后的值。若把independent=patch当成复制，则二者仍是同一个对象。将result生成与patch修改拆成乱序单元格也可能造成重复加100，核对时应从头重跑。</p><h2>选做答案</h2><p>从新建数据开始，将原地修改替换为patch=patch+100，会产生新的结果并让patch引用它，原result保持原有数值。先前存在的基本切片仍可共享原result，新的加法结果不会追随原result的后续变化。</p></main></body></html>
