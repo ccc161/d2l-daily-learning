@@ -1,0 +1,85 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>006 · 参考答案</title><style>body{font-family:system-ui,sans-serif;color:#172b37;background:#f5f4ef;line-height:1.75;margin:0}main{max-width:920px;margin:auto;padding:36px 24px}h1,h2{line-height:1.3;color:#125553}h1{font-size:2.2rem}h2{margin-top:2rem}pre{background:#152d36;color:#f3f7f6;padding:18px;overflow:auto;font-size:14px;line-height:1.6}code{font-family:monospace}a{color:#086b73}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #b6c8c5;text-align:left;padding:9px}.callout{border-left:5px solid #d3993a;padding:12px 20px;background:#fff}nav{display:flex;gap:16px;flex-wrap:wrap}section.slide{box-sizing:border-box;min-height:650px;background:white;border-top:8px solid #125553;margin:28px 0;padding:36px;box-shadow:0 5px 20px #172b3710}.flow{font-size:1.35rem;background:#e8f3ef;padding:20px}footer{margin-top:32px;font-size:.85rem}@media print{@page{size:A4 landscape;margin:12mm}body{background:white}main{max-width:none;padding:0}nav{display:none}section.slide{break-after:page;height:180mm;min-height:0;margin:0;box-shadow:none;padding:15px 25px}section.slide:last-of-type{break-after:auto}pre{white-space:pre-wrap;color:black;background:#eee;font-size:11px}a{color:inherit}footer{font-size:10px}}</style></head><body><main><nav><a href="notes.html">笔记</a><a href="slides.html">六页课件</a><a href="homework.txt">作业</a><a href="answers.html">独立答案</a></nav><h1>第006节 · 独立参考答案</h1><p>自编解答，请先完成作业。</p><h2>Q1</h2><p>Price是要预测的目标，把它放进输入会泄漏目标。均值和数据驱动的类别表是预处理参数，应从训练表确定，再应用到后续评估或推理数据，防止后续信息影响训练流程。</p><p>缺失表示该项未记录；新类别表示记录了一个训练中未见的值。本课分别映射为__MISSING__和__OTHER__。列顺序必须一致，否则同一位置在两批张量中可能代表不同含义。</p><h2>Q2 完整独立代码</h2><p>训练观察值仍是2、4、6，所以均值仍为4；1000只存在于后续输入。新增Gravel使用已有类别列，不增加特征数。</p><pre>&quot;&quot;&quot;第006节：CSV、缺失值、类别编码与PyTorch张量。
+依赖pandas、torch。运行python lessons/006/lesson.py。
+CPU、种子42，内嵌4行训练CSV和2行后续输入，无数据下载。
+输出缺失计数、训练均值、列名、张量形状与数值，最后PASS。
+&quot;&quot;&quot;
+# 1. 读取CSV并分开输入与目标
+from io import StringIO
+import math
+import pandas as pd
+import torch
+
+torch.manual_seed(42)
+torch.set_num_threads(1)
+device = torch.device(&quot;cpu&quot;)
+# 内嵌CSV确保脚本与Notebook都不依赖额外文件。
+train_csv = &quot;Rooms,Street,Price\n2,Pave,100\n,Gravel,150\n4,,200\n6,Pave,300\n&quot;
+later_csv = &quot;Rooms,Street\n,Dirt\n1000,\n,Gravel\n&quot;
+train = pd.read_csv(StringIO(train_csv))
+later = pd.read_csv(StringIO(later_csv))
+targets = train[&quot;Price&quot;].copy()
+print(&quot;versions&quot;, pd.__version__, torch.__version__)
+print(&quot;training missing counts&quot;, train.isna().sum().to_dict())
+
+
+# 2. 只从训练表确定预处理规则
+room_mean = float(train[&quot;Rooms&quot;].mean())
+if not math.isfinite(room_mean):
+    raise ValueError(&quot;Training Rooms must contain a finite observed value&quot;)
+known_streets = sorted(train[&quot;Street&quot;].dropna().unique().tolist())
+# 本课原始类别不使用以下两个保留标记。
+categories = known_streets + [&quot;__MISSING__&quot;, &quot;__OTHER__&quot;]
+print(&quot;training room mean&quot;, room_mean)
+print(&quot;known streets&quot;, known_streets)
+assert room_mean == 4.0
+
+
+# 3. 填补数值并保持固定的独热列
+def make_features(frame, mean_rooms, street_categories):
+    rooms = pd.to_numeric(frame[&quot;Rooms&quot;], errors=&quot;raise&quot;).fillna(mean_rooms)
+    streets = frame[&quot;Street&quot;].astype(&quot;string&quot;).fillna(&quot;__MISSING__&quot;)
+    streets = streets.where(streets.isin(street_categories), &quot;__OTHER__&quot;)
+    encoded = pd.get_dummies(
+        pd.Categorical(streets, categories=street_categories),
+        prefix=&quot;Street&quot;, dtype=float,
+    )
+    # 保留原表索引，拼接时维持样本对应关系。
+    encoded.index = frame.index
+    numeric = rooms.to_frame(name=&quot;Rooms&quot;)
+    return pd.concat([numeric, encoded], axis=1).astype(&quot;float32&quot;)
+
+
+train_features = make_features(train, room_mean, categories)
+later_features = make_features(later, room_mean, categories)
+feature_names = train_features.columns.tolist()
+assert later_features.columns.tolist() == feature_names
+assert &quot;Price&quot; not in feature_names
+assert not train_features.isna().any().any()
+assert not later_features.isna().any().any()
+print(&quot;feature columns&quot;, feature_names)
+
+
+# 4. 转换为CPU浮点张量并验收
+X_train = torch.tensor(train_features.to_numpy(dtype=&quot;float32&quot;), dtype=torch.float32, device=device)
+X_later = torch.tensor(later_features.to_numpy(dtype=&quot;float32&quot;), dtype=torch.float32, device=device)
+y_train = torch.tensor(targets.to_numpy(dtype=&quot;float32&quot;), dtype=torch.float32, device=device).reshape(-1, 1)
+print(&quot;tensor shapes&quot;, tuple(X_train.shape), tuple(y_train.shape), tuple(X_later.shape))
+print(&quot;train tensor&quot;, X_train.tolist())
+print(&quot;later tensor&quot;, X_later.tolist())
+print(&quot;target tensor&quot;, y_train.tolist())
+assert X_train.shape == (4, 5) and y_train.shape == (4, 1)
+assert X_later.shape == (3, 5)
+assert torch.equal(X_later[2], torch.tensor([4., 1., 0., 0., 0.], device=device))
+assert torch.isfinite(X_train).all() and torch.isfinite(X_later).all()
+assert torch.isfinite(y_train).all()
+assert X_later[0, 0].item() == 4.0
+assert later_features.iloc[0][&quot;Street___OTHER__&quot;] == 1.0
+assert later_features.iloc[1][&quot;Street___MISSING__&quot;] == 1.0
+print(&quot;dtype&quot;, X_train.dtype, &quot;device&quot;, X_train.device)
+print(&quot;PASS&quot;)
+</pre><h2>结果核对</h2><pre>training room mean 4.0
+later tensor [[4.0,0.0,0.0,0.0,1.0],
+              [1000.0,0.0,0.0,1.0,0.0],
+              [4.0,1.0,0.0,0.0,0.0]]
+dtype torch.float32 device cpu
+PASS</pre><p>如果把训练与后续表一起计算观察均值，会得到(2+4+6+1000)/4=253，这是本练习要避免的做法。如果输出仍有两行，说明CSV未重新读取或形状断言未更新。列数一直是5。</p><h2>选做答案</h2><p>读取后设置later.index=[10,20,30]再处理。make_features把编码表的索引设为原表索引，因此拼接仍按正确样本对齐，张量行顺序与原later一致。没有这步时，编码表默认从0编号，拼接可能多出行或NaN。</p></main></body></html>

@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-23",
+  "python": "3.12.14",
+  "torch": "2.15.0+cpu",
+  "pandas": "3.1.1",
+  "device": "cpu",
+  "seed": 42,
+  "script": "passed",
+  "reference_answer": "passed",
+  "notebook_schema": "passed",
+  "notebook_execution": "Four code cells executed twice in independent fresh Python namespaces; output equals standalone script. Modified-data cells equal reference answer. Notebook saved with empty outputs.",
+  "jupyter_kernel_execution": "Not tested in this run; earlier ipykernel attempts in this workspace encountered runtime socket restrictions. Local restart-and-run-all remains a learner check.",
+  "checks": [
+    "training mean remains 4 after later Rooms changes to 1000",
+    "fixed feature columns and no target leakage",
+    "missing and unseen categories distinct",
+    "exact train/later/homework tensor values and float32 finite values",
+    "non-default DataFrame index preserves row order",
+    "transform does not mutate input DataFrame"
+  ],
+  "category_policy": "Training vocabulary Gravel/Pave plus reserved __MISSING__ and __OTHER__; these markers are not raw category values in this exercise.",
+  "html_relative_links": "checked against lesson files and repository source-notice reference",
+  "html_print_rendering": {
+    "renderer": "WeasyPrint 70.0",
+    "pages": {
+      "notes": 6,
+      "answers": 4,
+      "slides": 6
+    },
+    "slide_pages": 6,
+    "browser_preview": "Browser execution not tested"
+  },
+  "actual_script_stdout": "versions 3.1.1 2.15.0+cpu\ntraining missing counts {'Rooms': 1, 'Street': 1, 'Price': 0}\ntraining room mean 4.0\nknown streets ['Gravel', 'Pave']\nfeature columns ['Rooms', 'Street_Gravel', 'Street_Pave', 'Street___MISSING__', 'Street___OTHER__']\ntensor shapes (4, 5) (4, 1) (2, 5)\ntrain tensor [[2.0, 0.0, 1.0, 0.0, 0.0], [4.0, 1.0, 0.0, 0.0, 0.0], [4.0, 0.0, 0.0, 1.0, 0.0], [6.0, 0.0, 1.0, 0.0, 0.0]]\nlater tensor [[4.0, 0.0, 0.0, 0.0, 1.0], [10.0, 0.0, 0.0, 1.0, 0.0]]\ntarget tensor [[100.0], [150.0], [200.0], [300.0]]\ndtype torch.float32 device cpu\nPASS\n",
+  "actual_answer_stdout": "versions 3.1.1 2.15.0+cpu\ntraining missing counts {'Rooms': 1, 'Street': 1, 'Price': 0}\ntraining room mean 4.0\nknown streets ['Gravel', 'Pave']\nfeature columns ['Rooms', 'Street_Gravel', 'Street_Pave', 'Street___MISSING__', 'Street___OTHER__']\ntensor shapes (4, 5) (4, 1) (3, 5)\ntrain tensor [[2.0, 0.0, 1.0, 0.0, 0.0], [4.0, 1.0, 0.0, 0.0, 0.0], [4.0, 0.0, 0.0, 1.0, 0.0], [6.0, 0.0, 1.0, 0.0, 0.0]]\nlater tensor [[4.0, 0.0, 0.0, 0.0, 1.0], [1000.0, 0.0, 0.0, 1.0, 0.0], [4.0, 1.0, 0.0, 0.0, 0.0]]\ntarget tensor [[100.0], [150.0], [200.0], [300.0]]\ndtype torch.float32 device cpu\nPASS\n",
+  "accelerators": "CPU tested; CUDA and Apple MPS execution not tested.",
+  "html_visual_review": "Printed slide pages 4 and 5 reviewed; category table, code and tensor shapes fit on page."
+}
