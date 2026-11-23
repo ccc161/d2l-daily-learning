@@ -1,0 +1,27 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>007 · 参考答案</title><style>body{font-family:system-ui,sans-serif;color:#172b37;background:#f5f4ef;line-height:1.75;margin:0}main{max-width:920px;margin:auto;padding:36px 24px}h1,h2{line-height:1.3;color:#125553}h1{font-size:2.2rem}h2{margin-top:2rem}pre{background:#152d36;color:#f3f7f6;padding:18px;overflow:auto;font-size:14px;line-height:1.6}code{font-family:monospace}a{color:#086b73}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #b6c8c5;text-align:left;padding:9px}.callout{border-left:5px solid #d3993a;padding:12px 20px;background:#fff}nav{display:flex;gap:16px;flex-wrap:wrap}section.slide{box-sizing:border-box;min-height:650px;background:white;border-top:8px solid #125553;margin:28px 0;padding:36px;box-shadow:0 5px 20px #172b3710}.flow{font-size:1.35rem;background:#e8f3ef;padding:20px}footer{margin-top:32px;font-size:.85rem}@media print{@page{size:A4 landscape;margin:12mm}body{background:white}main{max-width:none;padding:0}nav{display:none}section.slide{break-after:page;height:180mm;min-height:0;margin:0;box-shadow:none;padding:15px 25px}section.slide:last-of-type{break-after:auto}pre{white-space:pre-wrap;color:black;background:#eee;font-size:11px}a{color:inherit}footer{font-size:10px}}</style></head><body><main><nav><a href="notes.html">笔记</a><a href="slides.html">六页课件</a><a href="homework.txt">作业</a><a href="answers.html">独立答案</a></nav><h1>第007节 · 独立参考答案</h1><p>自编解答，请先完成作业。</p><h2>Q1</h2><table><tr><th>表达式</th><th>形状</th><th>含义</th></tr><tr><td>X*w</td><td>(5,3)</td><td>5个样本各3个逐元素乘积</td></tr><tr><td>X@w</td><td>(5,)</td><td>5个加权和</td></tr><tr><td>X@w.reshape(3,1)</td><td>(5,1)</td><td>保留单输出轴</td></tr><tr><td>X@W</td><td>(5,2)</td><td>每个样本2个输出</td></tr></table><p>点积对同位置乘积求和，所有特征被合并为一个标量。(5,3)@(5,1)的内侧轴为3和5，不相同，所以不能做矩阵乘法。</p><h2>Q2 完整独立代码</h2><p>第一行点积为−1+2×2=3，加0.5得到3.5。第二列权重[1,−1]给每行计算第一特征减第二特征，三行均为−1。</p><pre>&quot;&quot;&quot;第007节代码题自编参考答案，依赖torch，CPU独立运行。&quot;&quot;&quot;
+import torch
+
+torch.manual_seed(42)
+device = torch.device(&quot;cpu&quot;)
+X = torch.tensor([[1., 2.], [3., 4.], [5., 6.]], dtype=torch.float32, device=device)
+w = torch.tensor([-1., 2.], dtype=torch.float32, device=device)
+per_row = torch.stack([torch.dot(row, w) + 0.5 for row in X])
+batch = X @ w + 0.5
+column = X @ w.reshape(-1, 1) + 0.5
+W = torch.tensor([[-1., 1.], [2., -1.]], dtype=torch.float32, device=device)
+bias = torch.tensor([0.5, 0.], dtype=torch.float32, device=device)
+multi = X @ W + bias
+assert batch.shape == (3,) and column.shape == (3, 1)
+assert multi.shape == (3, 2)
+assert torch.allclose(per_row, batch)
+assert torch.allclose(column.squeeze(1), batch)
+assert torch.allclose(batch, torch.tensor([3.5, 5.5, 7.5], device=device))
+assert torch.allclose(multi, torch.tensor([[3.5, -1.], [5.5, -1.], [7.5, -1.]], device=device))
+print(&quot;batch&quot;, batch.tolist(), &quot;shape&quot;, tuple(batch.shape))
+print(&quot;column&quot;, column.tolist(), &quot;shape&quot;, tuple(column.shape))
+print(&quot;multi&quot;, multi.tolist(), &quot;shape&quot;, tuple(multi.shape))
+print(&quot;PASS&quot;)
+</pre><h2>结果核对与误区</h2><pre>batch [3.5,5.5,7.5] shape (3,)
+column [[3.5],[5.5],[7.5]] shape (3,1)
+multi [[3.5,-1],[5.5,-1],[7.5,-1]] shape (3,2)
+PASS</pre><p>把所有乘积直接sum()会合并所有样本，丢失每个样本自己的结果。W的每列对应一套输出权重，不能把权重顺序随意交换。数值比较前先检查形状，可避免(3,)与(3,1)发生广播。</p><h2>选做答案</h2><p>使用one=X[:1]保留(1,2)，再算one@w.reshape(−1,1)+0.5，结果为[[3.5]]，形状(1,1)。若需要去掉输出轴，用squeeze(1)得到(1,)；不带轴的squeeze()可能连样本轴也去掉。</p></main></body></html>

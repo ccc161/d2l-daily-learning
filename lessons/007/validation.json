@@ -1,0 +1,37 @@
+{
+  "date": "2026-11-24",
+  "python": "3.12.14",
+  "torch": "2.15.0+cpu",
+  "device": "cpu",
+  "seed": 42,
+  "script": "passed",
+  "reference_answer": "passed",
+  "notebook_schema": "passed",
+  "notebook_execution": "Four code cells executed twice in independent fresh Python namespaces; output equals standalone script. Notebook saved with empty outputs.",
+  "jupyter_kernel_execution": "Not tested in this run; earlier ipykernel attempts in this workspace encountered runtime socket restrictions. Local restart-and-run-all remains a learner check.",
+  "checks": [
+    "vector, column and matrix transpose shapes",
+    "dot equals elementwise multiply followed by sum",
+    "per-sample and batch outputs agree",
+    "column output and explicit-axis squeeze preserve sample count",
+    "matrix-matrix output equals stacked matrix-vector outputs",
+    "incompatible inner dimensions rejected",
+    "exact homework single and multiple output values",
+    "single-sample result retains (1,1), squeeze(1) retains (1,)"
+  ],
+  "html_relative_links": "checked against lesson files and repository source-notice reference",
+  "html_print_rendering": {
+    "renderer": "WeasyPrint 70.0",
+    "pages": {
+      "notes": 6,
+      "answers": 3,
+      "slides": 6
+    },
+    "slide_pages": 6,
+    "browser_preview": "Browser execution not tested"
+  },
+  "actual_script_stdout": "PyTorch 2.15.0+cpu device cpu\ninput shapes (2, 3) (3,) (3, 1)\ntranspose shape (3, 2)\nfirst dot 1.5 shape ()\nfirst element products [2.0, -2.0, 1.5]\nelementwise shape (2, 3)\nbatch scores [1.5, 6.0] shape (2,)\ncolumn scores [[1.5], [6.0]] shape (2, 1)\nsingle output with bias [1.75, 6.25]\nmatrix shapes (2, 3) (3, 2) (2, 2)\nmulti output [[1.75, -1.0], [6.25, -1.0]]\nincompatible matmul rejected: inner dimensions 3 and 2\nPASS\n",
+  "actual_answer_stdout": "batch [3.5, 5.5, 7.5] shape (3,)\ncolumn [[3.5], [5.5], [7.5]] shape (3, 1)\nmulti [[3.5, -1.0], [5.5, -1.0], [7.5, -1.0]] shape (3, 2)\nPASS\n",
+  "accelerators": "CPU tested; CUDA and Apple MPS execution not tested.",
+  "html_visual_review": "Printed slide pages 4 and 5 reviewed; shape table, code and numerical examples fit on page."
+}
