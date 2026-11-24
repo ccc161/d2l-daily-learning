@@ -1,0 +1,66 @@
+{
+  "date": "2026-11-25",
+  "python": "3.12.14",
+  "torch": "2.15.0+cpu",
+  "device": "cpu",
+  "dtype": "float64",
+  "seed": 42,
+  "script": "passed",
+  "reference_answer": "passed",
+  "notebook_schema": "passed",
+  "notebook_execution": "Four code cells executed twice in independent fresh Python namespaces; output equals standalone script. Notebook saved with empty outputs.",
+  "jupyter_kernel_execution": "Not tested in this run; earlier ipykernel attempts in this workspace encountered runtime socket restrictions. Local restart-and-run-all remains a learner check.",
+  "checks": [
+    "L1 L2 Linf and absolute scaling",
+    "linear map additivity and homogeneity",
+    "nonuniform scaling changes length, rotation preserves length",
+    "Frobenius norm matches square root of element squares",
+    "moderate forward steps match 4+h, central steps approximate 4",
+    "zero difference step rejected",
+    "cubic homework estimates match 12+h^2",
+    "zero vector norm is zero"
+  ],
+  "tiny_step_observation": {
+    "h": 1e-16,
+    "x_plus_h_equals_x": true,
+    "forward_estimate": 0.0,
+    "portable_accuracy_assertion": false
+  },
+  "difference_rows": [
+    [
+      0.1,
+      4.100000000000001,
+      4.000000000000001
+    ],
+    [
+      0.01,
+      4.009999999999891,
+      3.999999999999937
+    ],
+    [
+      0.0001,
+      4.0001000000078335,
+      4.000000000004
+    ],
+    [
+      1e-06,
+      4.0000010006480125,
+      4.000000000115023
+    ]
+  ],
+  "html_relative_links": "checked against lesson files and repository source-notice reference",
+  "html_print_rendering": {
+    "renderer": "WeasyPrint 70.0",
+    "pages": {
+      "notes": 6,
+      "answers": 3,
+      "slides": 6
+    },
+    "slide_pages": 6,
+    "browser_preview": "Browser execution not tested"
+  },
+  "actual_script_stdout": "PyTorch 2.15.0+cpu dtype torch.float64 device cpu\nvector shape (2,) L1 7.0 L2 5.0 Linf 4.0\nscaled [6.0, -2.0] L2 6.32455532\nrotated [4.0, 3.0] L2 5.0\nA Frobenius 2.061552813\nh=1e-01 forward=4.100000000 central=4.000000000\nh=1e-02 forward=4.010000000 central=4.000000000\nh=1e-04 forward=4.000100000 central=4.000000000\nh=1e-06 forward=4.000001001 central=4.000000000\ntiny step collapses True forward estimate 0.0\nPASS\n",
+  "actual_answer_stdout": "norms 14.0 10.0\ntransformed [-3.0, 16.0] L2 16.278820596\nh=0.1 central=12.010000000 error=0.010000000\nh=0.01 central=12.000100000 error=0.000100000\nh=0.001 central=12.000001000 error=0.000001000\nPASS\n",
+  "accelerators": "CPU float64 tested; CUDA and Apple MPS execution not tested.",
+  "html_visual_review": "Printed slide pages 3 and 4 reviewed; transformation table, difference formulas and code fit on page."
+}

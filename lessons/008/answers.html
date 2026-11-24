@@ -1,0 +1,36 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>008 · 参考答案</title><style>body{font-family:system-ui,sans-serif;color:#172b37;background:#f5f4ef;line-height:1.75;margin:0}main{max-width:920px;margin:auto;padding:36px 24px}h1,h2{line-height:1.3;color:#125553}h1{font-size:2.2rem}h2{margin-top:2rem}pre{background:#152d36;color:#f3f7f6;padding:18px;overflow:auto;font-size:14px;line-height:1.6}code{font-family:monospace}a{color:#086b73}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #b6c8c5;text-align:left;padding:9px}.callout{border-left:5px solid #d3993a;padding:12px 20px;background:#fff}nav{display:flex;gap:16px;flex-wrap:wrap}section.slide{box-sizing:border-box;min-height:650px;background:white;border-top:8px solid #125553;margin:28px 0;padding:36px;box-shadow:0 5px 20px #172b3710}.flow{font-size:1.35rem;background:#e8f3ef;padding:20px}footer{margin-top:32px;font-size:.85rem}@media print{@page{size:A4 landscape;margin:12mm}body{background:white}main{max-width:none;padding:0}nav{display:none}section.slide{break-after:page;height:180mm;min-height:0;margin:0;box-shadow:none;padding:15px 25px}section.slide:last-of-type{break-after:auto}pre{white-space:pre-wrap;color:black;background:#eee;font-size:11px}a{color:inherit}footer{font-size:10px}}</style></head><body><main><nav><a href="notes.html">笔记</a><a href="slides.html">六页课件</a><a href="homework.txt">作业</a><a href="answers.html">独立答案</a></nav><h1>第008节 · 独立参考答案</h1><p>自编解答，请先完成作业。</p><h2>Q1</h2><p>shape=(2,)表示一条长度为2的轴，numel=2是元素数，L2范数=5表示分量按欧氏公式合成的数值长度。‖−2v‖₂=2‖v‖₂。线性性质要求加法与标量乘法得到一致处理，并不要求每个方向的长度保持不变；非均匀缩放矩阵就是例子。</p><p>[(2+h)²−4]/h=4+h，h趋近0时极限为4。h=0使差分分母为0，不能直接代入。浮点表示与相近数相减会引入数值误差，过小步长可能让输入扰动在计算中消失。</p><h2>Q2 完整代码</h2><p>L1=6+8=14，L2=√(36+64)=10。变换后为[−3,16]，长度√(9+256)=√265≈16.278821。对g(x)=x³，[(2+h)³−(2−h)³]/(2h)=12+h²。</p><pre>&quot;&quot;&quot;第008节自编参考解答，依赖torch，CPU float64独立运行。&quot;&quot;&quot;
+import torch
+
+torch.manual_seed(42)
+device = torch.device(&quot;cpu&quot;)
+dtype = torch.float64
+v = torch.tensor([-6., 8.], dtype=dtype, device=device)
+B = torch.tensor([[0.5, 0.], [0., 2.]], dtype=dtype, device=device)
+transformed = B @ v
+l1 = torch.linalg.vector_norm(v, ord=1)
+l2 = torch.linalg.vector_norm(v, ord=2)
+after = torch.linalg.vector_norm(transformed)
+assert l1.item() == 14 and l2.item() == 10
+assert torch.allclose(transformed, torch.tensor([-3., 16.], dtype=dtype, device=device))
+assert torch.allclose(after, torch.sqrt(torch.tensor(265., dtype=dtype, device=device)))
+print(&quot;norms&quot;, l1.item(), l2.item())
+print(&quot;transformed&quot;, transformed.tolist(), &quot;L2&quot;, round(after.item(), 9))
+
+
+def g(x):
+    return x ** 3
+
+
+x0 = torch.tensor(2., dtype=dtype, device=device)
+for h in [0.1, 0.01, 0.001]:
+    estimate = ((g(x0 + h) - g(x0 - h)) / (2 * h)).item()
+    error = abs(estimate - 12)
+    print(f&quot;h={h:g} central={estimate:.9f} error={error:.9f}&quot;)
+assert error &lt; 2e-6
+print(&quot;PASS&quot;)
+</pre><h2>结果核对与误区</h2><pre>norms 14.0 10.0
+transformed [-3.0,16.0] L2 16.278820596
+h=0.1 central=12.010000000 error=0.010000000
+h=0.01 central=12.000100000 error=0.000100000
+h=0.001 central=12.000001000 error=0.000001000
+PASS</pre><p>不同版本末位可能有微小变化。中心差分使用左右两边点的距离2h；平方函数上的精确抵消不能推广到立方函数。范数中的负分量要平方或取绝对值，不能直接相加。</p><h2>选做答案</h2><p>零向量L2范数为0。可先判断范数是否大于0，非零时除以范数，零向量则保留为零并明确返回状态。具体任务也可选择报错，但不能直接除以0再把NaN当作正常结果。</p></main></body></html>
