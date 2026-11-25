@@ -1,0 +1,31 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>009 · 参考答案</title><style>body{font-family:system-ui,sans-serif;color:#172b37;background:#f5f4ef;line-height:1.75;margin:0}main{max-width:920px;margin:auto;padding:36px 24px}h1,h2{line-height:1.3;color:#125553}h1{font-size:2.2rem}h2{margin-top:2rem}pre{background:#152d36;color:#f3f7f6;padding:18px;overflow:auto;font-size:14px;line-height:1.6}code{font-family:monospace}a{color:#086b73}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #b6c8c5;text-align:left;padding:9px}.callout{border-left:5px solid #d3993a;padding:12px 20px;background:#fff}nav{display:flex;gap:16px;flex-wrap:wrap}section.slide{box-sizing:border-box;min-height:650px;background:white;border-top:8px solid #125553;margin:28px 0;padding:36px;box-shadow:0 5px 20px #172b3710}.flow{font-size:1.35rem;background:#e8f3ef;padding:20px}footer{margin-top:32px;font-size:.85rem}@media print{@page{size:A4 landscape;margin:12mm}body{background:white}main{max-width:none;padding:0}nav{display:none}section.slide{break-after:page;height:180mm;min-height:0;margin:0;box-shadow:none;padding:15px 25px}section.slide:last-of-type{break-after:auto}pre{white-space:pre-wrap;color:black;background:#eee;font-size:11px}a{color:inherit}footer{font-size:10px}}</style></head><body><main><nav><a href="notes.html">笔记</a><a href="slides.html">六页课件</a><a href="homework.txt">作业</a><a href="answers.html">独立答案</a></nav><h1>第009节 · 独立参考答案</h1><p>自编解答，请先完成作业。</p><h2>Q1</h2><p>偏导只改变一个坐标、保持其他坐标不变；梯度把所有偏导按输入顺序组成向量。令s=ab+a，L=s²，则∂L/∂a=2s(b+1)，∂L/∂b=2sa。a经过乘法ab和直接加a两条路径影响s，贡献分别为b和1。</p><p>requires_grad让后续相关运算在正常梯度模式下参与自动求导；backward沿依赖应用链式法则；叶子的.grad保存梯度。输入数值不会自动更新。sum把各项直接相加，mean在本题三个项下多乘1/3，所以相应梯度缩小到三分之一。</p><h2>Q2 完整代码</h2><p>a=1、b=2时s=3、L=9，梯度为[2×3×3,2×3×1]=[18,6]。z=[1,2,3]时逐项值为[4,10,18]，平均32/3，梯度为(2z+3)/3=[5/3,7/3,3]。</p><pre>&quot;&quot;&quot;第009节自编参考解答，依赖torch，CPU float32独立运行。&quot;&quot;&quot;
+import torch
+
+torch.manual_seed(42)
+device = torch.device(&quot;cpu&quot;)
+x = torch.tensor([1., 2.], dtype=torch.float32, device=device, requires_grad=True)
+loss = (x[0] * x[1] + x[0]) ** 2
+loss.backward()
+assert loss.item() == 9
+assert x.grad is not None and x.grad.shape == x.shape == (2,)
+assert torch.allclose(x.grad, torch.tensor([18., 6.], device=device))
+assert torch.equal(x, torch.tensor([1., 2.], device=device))
+print(&quot;loss&quot;, loss.item(), &quot;gradient&quot;, x.grad.tolist())
+
+z = torch.tensor([1., 2., 3.], dtype=torch.float32, device=device, requires_grad=True)
+terms = z ** 2 + 3 * z
+mean_loss = terms.mean()
+mean_loss.backward()
+expected = torch.tensor([5/3, 7/3, 3.], dtype=torch.float32, device=device)
+assert mean_loss.shape == () and terms.shape == (3,)
+assert z.grad is not None and z.grad.shape == z.shape == (3,)
+assert torch.allclose(z.grad, expected)
+assert abs(mean_loss.item() - 32/3) &lt; 1e-6
+assert torch.equal(z, torch.tensor([1., 2., 3.], device=device))
+print(f&quot;mean loss {mean_loss.item():.6f}&quot;)
+print(&quot;mean gradient&quot;, [round(value, 6) for value in z.grad.tolist()])
+print(&quot;PASS&quot;)
+</pre><h2>结果核对与误区</h2><pre>loss 9.0 gradient [18.0,6.0]
+mean loss 10.666667
+mean gradient [1.666667,2.333333,3.0]
+PASS</pre><p>末位可能因浮点表示略有变化。不能把mean的梯度直接写成sum的梯度，也不能漏掉a直接进入加法的路径。重新创建本题输入即可得到新的叶子和计算图，方便独立核对。</p><h2>选做答案</h2><p>分别新建值相同的z_sum与z_mean，在各自前向图上做sum与mean，再比较z_sum.grad与3*z_mean.grad，应在容差内一致。这样可以避免把两个不同目标的梯度混在同一个叶子缓冲区中。</p></main></body></html>

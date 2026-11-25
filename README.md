@@ -19,8 +19,10 @@
 
 ## 当前状态
 
-ChatGPT Work 云端已交付至第 008/136 节。已推送 8 节，已确认完成 0 节；下一节为 009。代码、Notebook 顺序执行与课件打印验证范围见 [第 008 节验证记录](lessons/008/validation.json)。
+ChatGPT Work 云端已交付至第 009/136 节。已推送 9 节，已确认完成 0 节；下一节为 010。代码、Notebook 顺序执行与课件打印验证范围见 [第 009 节验证记录](lessons/009/validation.json)。
 
+- [第 009 节笔记](lessons/009/notes.html)
+- [第 009 节六页课件](lessons/009/slides.html)
 - [第 008 节笔记](lessons/008/notes.html)
 - [第 008 节六页课件](lessons/008/slides.html)
 - [第 007 节笔记](lessons/007/notes.html)
