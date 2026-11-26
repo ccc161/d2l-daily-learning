@@ -1,0 +1,38 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>010 · 参考答案</title><style>body{font-family:system-ui,sans-serif;color:#172b37;background:#f5f4ef;line-height:1.75;margin:0}main{max-width:920px;margin:auto;padding:36px 24px}h1,h2{line-height:1.3;color:#125553}h1{font-size:2.2rem}h2{margin-top:2rem}pre{background:#152d36;color:#f3f7f6;padding:18px;overflow:auto;font-size:14px;line-height:1.6}code{font-family:monospace}a{color:#086b73}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #b6c8c5;text-align:left;padding:9px}.callout{border-left:5px solid #d3993a;padding:12px 20px;background:#fff}nav{display:flex;gap:16px;flex-wrap:wrap}section.slide{box-sizing:border-box;min-height:650px;background:white;border-top:8px solid #125553;margin:28px 0;padding:36px;box-shadow:0 5px 20px #172b3710}.flow{font-size:1.35rem;background:#e8f3ef;padding:20px}footer{margin-top:32px;font-size:.85rem}@media print{@page{size:A4 landscape;margin:12mm}body{background:white}main{max-width:none;padding:0}nav{display:none}section.slide{break-after:page;height:180mm;min-height:0;margin:0;box-shadow:none;padding:15px 25px}section.slide:last-of-type{break-after:auto}pre{white-space:pre-wrap;color:black;background:#eee;font-size:11px}a{color:inherit}footer{font-size:10px}}</style></head><body><main><nav><a href="notes.html">笔记</a><a href="slides.html">六页课件</a><a href="homework.txt">作业</a><a href="answers.html">独立答案</a></nav><h1>第010节 · 独立参考答案</h1><p>自编解答，请先完成作业。</p><h2>Q1</h2><p>.grad是叶子保存梯度的缓冲区，新反向结果会加到已有数值。清零缓冲区不改变已构建或已释放的前向依赖，所以还需要为反向准备可用的计算图。</p><p>detach把某个中间值作为当前常数使用。x=3时(x²).detach()*x的梯度为9，完整x³则为27，前向都为27。分支控制流只对实际执行路径求导，不能证明边界两侧导数一致。</p><p>P(A|B)=P(A∩B)/P(B)，要求P(B)&gt;0。联合概率衡量两事件同时发生，条件概率在B内重新归一化，经验频率则是有限样本的计数比例。样本中B计数为0时不能计算这个比值。</p><h2>Q2 完整代码</h2><p>x²的梯度2x=6，2x贡献2，累计8；清零后固定x²=9，乘x的梯度为9。骰子事件A={1,2}、B={2,4,6}，交集只有2，因此条件概率1/3。</p><pre>&quot;&quot;&quot;第010节自编参考解答，依赖torch，CPU独立运行。&quot;&quot;&quot;
+import torch
+
+torch.manual_seed(42)
+x = torch.tensor(3., dtype=torch.float32, device=&quot;cpu&quot;, requires_grad=True)
+(x ** 2).backward()
+first = x.grad.item()
+(2 * x).backward()
+accumulated = x.grad.item()
+x.grad.zero_()
+fixed = (x * x).detach()
+(fixed * x).backward()
+detached_gradient = x.grad.item()
+assert (first, accumulated, detached_gradient) == (6., 8., 9.)
+assert x.item() == 3
+print(&quot;gradients first/accumulated/detached&quot;, first, accumulated, detached_gradient)
+
+outcomes = torch.arange(1, 7, device=&quot;cpu&quot;)
+A = outcomes &lt;= 2
+B = outcomes % 2 == 0
+count_B = int(B.sum().item())
+count_joint = int((A &amp; B).sum().item())
+assert count_B &gt; 0
+conditional = count_joint / count_B
+assert count_joint == 1 and count_B == 3
+assert abs(conditional - 1/3) &lt; 1e-12
+print(&quot;counts AB/B&quot;, count_joint, count_B)
+print(&quot;P(A|B)&quot;, conditional)
+print(&quot;PASS&quot;)
+</pre><h2>结果核对与误区</h2><pre>gradients first/accumulated/detached 6.0 8.0 9.0
+counts AB/B 1 3
+P(A|B) 0.3333333333333333
+PASS</pre><p>若未清零，最后会得到旧梯度与9的和。若把分母写成6，则得到联合概率1/6。若把fixed=x*x而没有detach，求导会沿完整立方路径得到27。</p><h2>选做答案</h2><pre>generator = torch.Generator(device="cpu").manual_seed(7)
+draws = torch.randint(1, 7, (6000,), generator=generator)
+A = draws &lt;= 2
+B = draws % 2 == 0
+count_B = int(B.sum().item())
+estimate = None if count_B == 0 else int((A &amp; B).sum().item()) / count_B</pre><p>不同种子得到不同有限样本，经验频率会变化。把种子重新设为同一个值，可在同环境中复现这批样本；不能要求每个有限样本的比例恰好1/3。</p></main></body></html>

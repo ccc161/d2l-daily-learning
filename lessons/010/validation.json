@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-27",
+  "python": "3.12.14",
+  "torch": "2.15.0+cpu",
+  "device": "cpu",
+  "dtype": "autograd float32, dice int64 and boolean event masks",
+  "seed": 42,
+  "sample_count": 6000,
+  "script": "passed",
+  "reference_answer": "passed",
+  "notebook_schema": "passed",
+  "notebook_execution": "Four code cells executed twice in independent fresh Python namespaces; output equals standalone script. Notebook saved with empty outputs.",
+  "jupyter_kernel_execution": "Not tested in this run; earlier ipykernel attempts in this workspace encountered runtime socket restrictions. Local restart-and-run-all remains a learner check.",
+  "checks": [
+    "new graphs accumulate gradients 4 then 7; clear then recompute gives 4",
+    "detached and full cubic values both 8; gradients 4 and 12",
+    "positive/negative executed branches give gradients 4 and 3",
+    "program branch gradient at zero is 3, while mathematical boundary is not differentiable",
+    "exact fair-die probabilities use correct joint and conditional denominators",
+    "zero-count condition returns None",
+    "local seeded generator reproduces the 6000 CPU samples in this environment",
+    "homework gradients 6,8,9 and exact conditional probability 1/3"
+  ],
+  "exact_probability": 0.6666666666666666,
+  "sample_B_count": 3009,
+  "sample_joint_count": 1963,
+  "empirical_conditional_frequency": 0.6523762047191758,
+  "empirical_tolerance_requirement": "No equality or closeness assertion against theoretical probability; finite-sample result is reported.",
+  "source_numbering": "Curriculum keeps fixed-source 2.5/2.6; live web pages now show 1.5/1.6. Existing lesson IDs retained.",
+  "html_relative_links": "checked against lesson files and repository source-notice reference",
+  "html_print_rendering": {
+    "renderer": "WeasyPrint 70.0",
+    "pages": {
+      "notes": 6,
+      "answers": 3,
+      "slides": 6
+    },
+    "slide_pages": 6,
+    "browser_preview": "Browser execution not tested"
+  },
+  "actual_script_stdout": "PyTorch 2.15.0+cpu device cpu\ngradients first/accumulated/cleared/fresh 4.0 7.0 0.0 4.0\nsame forward values 8.0 8.0\ndetached/full gradients 4.0 12.0\nbranch input/output/gradient [(2.0, 4.0, 4.0), (-2.0, -6.0, 3.0)]\nexact P(A), P(B), P(A and B), P(A|B) 0.5 0.5 0.3333333333333333 0.6666666666666666\nsample counts B/AB 3009 1963\nempirical P(A|B) 0.652376\nPASS\n",
+  "actual_answer_stdout": "gradients first/accumulated/detached 6.0 8.0 9.0\ncounts AB/B 1 3\nP(A|B) 0.3333333333333333\nPASS\n",
+  "accelerators": "CPU tested; CUDA and Apple MPS execution not tested.",
+  "html_visual_review": "Printed slide pages 3 and 5 reviewed; gradient comparisons, branch explanation, conditional-probability formulas and sampling notes fit on page."
+}
