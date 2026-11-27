@@ -1,0 +1,79 @@
+{
+  "date": "2026-11-28",
+  "python": "3.12.14",
+  "torch": "2.15.0+cpu",
+  "device": "cpu",
+  "dtype": "float64 statistics; integer draws converted to float64",
+  "seed": 42,
+  "maximum_sample_count": 20000,
+  "script": "passed",
+  "reference_answer": "passed",
+  "notebook_schema": "passed",
+  "notebook_execution": "Four code cells executed twice in independent fresh Python namespaces; output equals standalone script. Notebook saved with empty outputs.",
+  "jupyter_kernel_execution": "Not tested in this run; earlier ipykernel attempts in this workspace encountered runtime socket restrictions. Local restart-and-run-all remains a learner check.",
+  "checks": [
+    "weighted fair-die expectation 3.5 and variance 35/12",
+    "variance identity agrees with second moment minus squared expectation",
+    "correction 0 vs 1 and current default verified on [1,2,3]",
+    "dim=1 and keepdim shapes verified",
+    "local seeded CPU generator reproduces in this environment",
+    "sample variance and reported errors checked against manual formulas",
+    "single-element correction=0 returns zero; correction=1 returns NaN",
+    "homework mean and both variance definitions verified"
+  ],
+  "local_var_signature": "var(input, dim=None, *, correction=1, keepdim=False, out=None) -> Tensor",
+  "estimates": [
+    [
+      20,
+      4.15,
+      2.8274999999999997,
+      0.6500000000000004,
+      0.0891666666666664
+    ],
+    [
+      200,
+      3.57,
+      2.8951000000000007,
+      0.06999999999999984,
+      0.0215666666666654
+    ],
+    [
+      2000,
+      3.539,
+      2.8514789999999994,
+      0.039000000000000146,
+      0.06518766666666664
+    ],
+    [
+      20000,
+      3.4843,
+      2.910453509999295,
+      0.015699999999999825,
+      0.006213156667370878
+    ]
+  ],
+  "estimate_fields": [
+    "n",
+    "mean",
+    "variance_correction0",
+    "absolute_mean_error",
+    "absolute_variance_error"
+  ],
+  "sampling_accuracy_policy": "No monotonic-error or fixed-proximity assertion; finite-sample estimates and errors are reported.",
+  "html_relative_links": "checked against lesson files and repository source-notice reference",
+  "html_print_rendering": {
+    "renderer": "WeasyPrint 70.0",
+    "pages": {
+      "notes": 6,
+      "answers": 2,
+      "slides": 6
+    },
+    "slide_pages": 6,
+    "browser_preview": "Browser execution not tested"
+  },
+  "actual_script_stdout": "PyTorch 2.15.0+cpu dtype torch.float64 device cpu\nfair die expectation=3.500000000 variance=2.916666667\nAPI names ['mean', 'std', 'var']\nlocal var signature var(input, dim=None, *, correction=1, keepdim=False, out=None) -> Tensor\nsmall mean 2.0\nsmall variances correction0/correction1/default 0.666666667 1.0 1.0\nrow means [2.0, 5.0] shape (2,)\nrow variances [0.666666667, 0.666666667]\nvariance shapes (2,) (2, 1)\nn=20 mean=4.150000 var0=2.827500 mean_error=0.650000 variance_error=0.089167\nn=200 mean=3.570000 var0=2.895100 mean_error=0.070000 variance_error=0.021567\nn=2000 mean=3.539000 var0=2.851479 mean_error=0.039000 variance_error=0.065188\nn=20000 mean=3.484300 var0=2.910454 mean_error=0.015700 variance_error=0.006213\nPASS\n",
+  "actual_answer_stdout": "PyTorch 2.15.0+cpu\nvar signature var(input, dim=None, *, correction=1, keepdim=False, out=None) -> Tensor\nrow means [[4.0], [3.0]]\nvar0 [[2.6666666666666665], [2.6666666666666665]]\nvar1 [[4.0], [4.0]]\nshape (2, 1)\nPASS\n",
+  "accelerators": "CPU tested; CUDA and Apple MPS execution not tested.",
+  "minimum_torch_api_version": "2.0 for correction keyword; tested version recorded above",
+  "html_visual_review": "Printed slide pages 3 and 4 reviewed; variance denominator table, API workflow and shape examples fit on page."
+}

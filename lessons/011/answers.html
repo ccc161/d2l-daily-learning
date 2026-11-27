@@ -1,0 +1,28 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>011 · 参考答案</title><style>body{font-family:system-ui,sans-serif;color:#172b37;background:#f5f4ef;line-height:1.75;margin:0}main{max-width:920px;margin:auto;padding:36px 24px}h1,h2{line-height:1.3;color:#125553}h1{font-size:2.2rem}h2{margin-top:2rem}pre{background:#152d36;color:#f3f7f6;padding:18px;overflow:auto;font-size:14px;line-height:1.6}code{font-family:monospace}a{color:#086b73}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #b6c8c5;text-align:left;padding:9px}.callout{border-left:5px solid #d3993a;padding:12px 20px;background:#fff}nav{display:flex;gap:16px;flex-wrap:wrap}section.slide{box-sizing:border-box;min-height:650px;background:white;border-top:8px solid #125553;margin:28px 0;padding:36px;box-shadow:0 5px 20px #172b3710}.flow{font-size:1.35rem;background:#e8f3ef;padding:20px}footer{margin-top:32px;font-size:.85rem}@media print{@page{size:A4 landscape;margin:12mm}body{background:white}main{max-width:none;padding:0}nav{display:none}section.slide{break-after:page;height:180mm;min-height:0;margin:0;box-shadow:none;padding:15px 25px}section.slide:last-of-type{break-after:auto}pre{white-space:pre-wrap;color:black;background:#eee;font-size:11px}a{color:inherit}footer{font-size:10px}}</style></head><body><main><nav><a href="notes.html">笔记</a><a href="slides.html">六页课件</a><a href="homework.txt">作业</a><a href="answers.html">独立答案</a></nav><h1>第011节 · 独立参考答案</h1><p>自编解答，请先完成作业。</p><h2>Q1</h2><p>期望是按概率加权的平均，不必属于样本空间；六个骰子点数的平均是3.5。方差是围绕期望的平均平方偏离，标准差是方差开方，标准差与原变量单位相同。</p><p>在本节正的归约长度n下，correction=0使用分母n，correction=1使用n−1且要求有足够自由度。最小示例可以核对默认参数、dtype、归约轴、输出形状和返回数值等内容。有限样本存在随机波动，误差不必逐次单调下降，应对照理论与多次观察来解释。</p><h2>Q2 完整独立代码</h2><p>第一行均值4，第二行均值3；每行平方偏差之和均为4+0+4=8。除以3为8/3，除以2为4。keepdim=True后每行统计量保留为一个列值。</p><pre>&quot;&quot;&quot;第011节自编参考答案，依赖torch&gt;=2.0，CPU float64独立运行。&quot;&quot;&quot;
+import torch
+
+torch.manual_seed(42)
+matrix = torch.tensor([[2., 4., 6.], [1., 3., 5.]], dtype=torch.float64, device=&quot;cpu&quot;)
+print(&quot;PyTorch&quot;, torch.__version__)
+print(&quot;var signature&quot;, torch.var.__doc__.strip().splitlines()[0])
+row_means = torch.mean(matrix, dim=1, keepdim=True)
+var0 = torch.var(matrix, dim=1, correction=0, keepdim=True)
+var1 = torch.var(matrix, dim=1, correction=1, keepdim=True)
+default = torch.var(matrix, dim=1, keepdim=True)
+manual = ((matrix - row_means) ** 2).mean(dim=1, keepdim=True)
+assert row_means.shape == var0.shape == var1.shape == (2, 1)
+assert torch.allclose(row_means, torch.tensor([[4.], [3.]], dtype=torch.float64))
+assert torch.allclose(var0, torch.full((2, 1), 8/3, dtype=torch.float64))
+assert torch.allclose(var1, torch.full((2, 1), 4., dtype=torch.float64))
+assert torch.allclose(var0, manual)
+assert torch.allclose(default, var1)
+print(&quot;row means&quot;, row_means.tolist())
+print(&quot;var0&quot;, var0.tolist())
+print(&quot;var1&quot;, var1.tolist())
+print(&quot;shape&quot;, tuple(var0.shape))
+print(&quot;PASS&quot;)
+</pre><h2>结果核对与误区</h2><pre>row means [[4.0],[3.0]]
+var0 [[2.6666666666666665],[2.6666666666666665]]
+var1 [[4.0],[4.0]]
+shape (2,1)
+PASS</pre><p>实际浮点末位可能略有差异。dim=0会沿样本轴处理各列，形状和含义不同。漏掉keepdim时结果为(2,)，虽然包含同样两个数，后续广播语义却不同。</p><h2>选做答案</h2><p>重新创建CPU Generator并使用新种子，再生成足够长的样本。分别记录两个样本量下均值与方差误差，注明correction。某次20个样本恰好很接近理论值，而之后某个前缀误差更大，仍然是可能的有限样本现象。</p></main></body></html>
